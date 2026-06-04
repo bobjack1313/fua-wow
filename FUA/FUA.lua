@@ -234,8 +234,15 @@ frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", 12, -8)
 frame.title:SetText("FUA | Midnight Falls")
 
+local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 2, 2)
+closeButton:SetScript("OnClick", function()
+    frame:Hide()
+end)
+
 local difficultyText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-difficultyText:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -8)
+difficultyText:SetPoint("RIGHT", closeButton, "LEFT", -6, -4)
+difficultyText:SetJustifyH("RIGHT")
 FUA.difficultyText = difficultyText
 UpdateDifficulty()
 
