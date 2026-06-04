@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="screenshots/icon.png" alt="FUA Logo" width="256">
+</p>
+
 # FUA
+
+![FUA main window](screenshots/fua-main-window.png)
 
 A lightweight World of Warcraft addon designed to assist with raid mechanics that require players to communicate a sequence of symbols.
 
@@ -76,6 +82,7 @@ Displays and prepares messages using shorthand notation:
 ```text
 [ O ] [ T ] [ <> ] [ V ] [ X ]
 ```
+![FUA character mode](screenshots/fua-character-mode.png)
 
 #### Markers
 
@@ -84,6 +91,7 @@ Displays raid marker icons in the addon window and prepares the equivalent raid 
 ```text
 {rt2} {rt1} {rt3} {rt4} {rt7}
 ```
+![FUA raid marker mode](screenshots/fua-marker-mode.png)
 
 ### Loading a Message
 
