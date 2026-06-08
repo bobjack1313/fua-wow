@@ -4,6 +4,7 @@
 ## Author: Mezcal
 ## Version: 0.1.0
 ## IconTexture: Interface\AddOns\FUA\textures\fua_icon
+## SavedVariables: FUADB
 
 FUA.lua
 Data.lua
@@ -12,4 +13,5 @@ Encounter.lua
 Chat.lua
 UI.lua
 Commands.lua
+Communication.lua
 Init.lua

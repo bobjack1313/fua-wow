@@ -25,6 +25,7 @@ FUA.DEFAULT_OUTPUT_MODE = "char"
 -----------------------------------------------------------------------
 
 FUA.MIDNIGHT_FALLS_ENCOUNTER_ID = 3183
+FUA.MARCH_OF_QUELDANAS_INSTANCE_ID = 2913
 
 -----------------------------------------------------------------------
 -- Symbol Definitions

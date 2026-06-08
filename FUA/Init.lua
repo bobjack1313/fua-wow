@@ -23,9 +23,17 @@ local addonName, FUA = ...
 -----------------------------------------------------------------------
 -- Runtime Initialization
 -----------------------------------------------------------------------
+FUADB = FUADB or {}
 
-FUA.outputMode = FUA.outputMode or FUA.DEFAULT_OUTPUT_MODE
+FUA.outputMode = FUADB.outputMode or FUA.DEFAULT_OUTPUT_MODE
 FUA.symbolCount = FUA.symbolCount or FUA.DEFAULT_SYMBOL_COUNT
+
+FUA.reverseOrder = FUADB.reverseOrder
+if FUA.reverseOrder == nil then
+    FUA.reverseOrder = true
+end
+
+FUA.showOnLogin = FUADB.showOnLogin or false
 
 -----------------------------------------------------------------------
 -- Addon Startup
@@ -36,3 +44,9 @@ FUA:RegisterEncounterEvents()
 FUA:RegisterCommands()
 FUA:UpdateDifficulty()
 FUA:UpdateDisplay()
+
+-----------------------------------------------------------------------
+-- Interapp Comms
+-----------------------------------------------------------------------
+
+C_ChatInfo.RegisterAddonMessagePrefix("FUA")

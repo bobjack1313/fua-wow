@@ -50,4 +50,19 @@ function FUA:RegisterCommands()
             self.frame:SetShown(not self.frame:IsShown())
         end
     end
+
+    SLASH_FUADEBUG1 = "/fuadebug"
+
+        SlashCmdList["FUADEBUG"] = function()
+        local name, instanceType, difficultyID, difficultyName,
+              maxPlayers, dynamicDifficulty, isDynamic,
+              instanceID = GetInstanceInfo()
+
+        print("Name:", name)
+        print("Type:", instanceType)
+        print("Difficulty:", difficultyID)
+        print("InstanceID:", instanceID)
+    end
+
 end
+

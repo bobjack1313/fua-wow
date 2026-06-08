@@ -39,6 +39,7 @@ end
 -----------------------------------------------------------------------
 -- Chat Integration
 -----------------------------------------------------------------------
+
 function FUA:OpenRaidChat()
     local text = self:GetChatOrderString()
 

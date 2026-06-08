@@ -2,14 +2,14 @@
 -- FUA - Midnight Falls Assignment Helper
 -- File: FUA.lua
 --
--- Addon namespace and runtime state initialization.
+-- Addon namespace and shared runtime state.
 --
 -- Responsible for:
---   * Creating the shared addon table
---   * Initializing runtime state
---   * Providing shared addon globals
+--   * Accessing the shared addon table
+--   * Initializing base runtime containers
 --
 -- Does NOT contain:
+--   * Saved variable initialization
 --   * User interface code
 --   * Encounter logic
 --   * Chat handling
@@ -18,9 +18,10 @@
 
 local addonName, FUA = ...
 
+_G.FUA = FUA -- temporary debug access
+
 -----------------------------------------------------------------------
 -- Runtime State
 -----------------------------------------------------------------------
 
 FUA.order = FUA.order or {}
-FUA.reverseOrder = true

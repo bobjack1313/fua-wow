@@ -60,18 +60,62 @@ end
 -----------------------------------------------------------------------
 
 function FUA:RegisterEncounterEvents()
-
     local encounterFrame = CreateFrame("Frame")
+    self.encounterFrame = encounterFrame
 
+    encounterFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+    encounterFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+    encounterFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+    encounterFrame:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
     encounterFrame:RegisterEvent("ENCOUNTER_START")
 
-    encounterFrame:SetScript("OnEvent", function(_, _, encounterID)
-        if encounterID == self.MIDNIGHT_FALLS_ENCOUNTER_ID then
-            FUA:ClearOrder()
-
-            if self.frame and not self.frame:IsShown() then
-                self.frame:Show()
-            end
+    encounterFrame:SetScript("OnEvent", function(_, event, encounterID)
+        if event == "PLAYER_ENTERING_WORLD" then
+            self:UpdateDifficulty()
+            self:UpdateDisplay()
+            self:ShowInstanceReminder()
+            return
         end
+
+        if event == "ENCOUNTER_START" then
+            if encounterID == self.MIDNIGHT_FALLS_ENCOUNTER_ID then
+                self:UpdateDifficulty()
+                self:ClearOrder()
+
+                if self.frame and not self.frame:IsShown() then
+                    self.frame:Show()
+                end
+            end
+
+            return
+        end
+
+        self:UpdateDifficulty()
+        self:UpdateDisplay()
     end)
+end
+
+function FUA:ShowInstanceReminder()
+    local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfo()
+
+    -- print("FUA reminder debug:", name, instanceType, difficultyID, instanceID)
+
+    if instanceType ~= "raid" then
+        return
+    end
+
+    if instanceID ~= self.MARCH_OF_QUELDANAS_INSTANCE_ID then
+        return
+    end
+
+    if self.reminderShown then
+        return
+    end
+
+    self.reminderShown = true
+
+    print("|cff00ff88FUA:|r Midnight Falls helper detected.")
+    print("|cff00ff88FUA:|r Use |cffffff00/fua|r to open the window.")
+    print("|cff00ff88FUA:|r Select rune order, then click |cffffff00Load Message|r.")
+    print("|cff00ff88FUA:|r Supports both Characters and Markers modes.")
 end

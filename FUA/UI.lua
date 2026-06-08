@@ -29,12 +29,36 @@ function FUA:CreateUI()
     self.frame = frame
 
     frame:SetSize(360, 210)
-    frame:SetPoint("CENTER")
+
+    if FUADB.position then
+        frame:SetPoint(
+            FUADB.position.point or "CENTER",
+            UIParent,
+            FUADB.position.relativePoint or "CENTER",
+            FUADB.position.x or 0,
+            FUADB.position.y or 0
+        )
+    else
+        frame:SetPoint("CENTER")
+    end
+
     frame:SetMovable(true)
     frame:EnableMouse(true)
     frame:RegisterForDrag("LeftButton")
     frame:SetScript("OnDragStart", frame.StartMoving)
-    frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
+
+    frame:SetScript("OnDragStop", function(self)
+    self:StopMovingOrSizing()
+
+    local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
+        FUADB.position = {
+            point = point,
+            relativePoint = relativePoint,
+            x = xOfs,
+            y = yOfs,
+        }
+    end)
+
     frame:SetFrameStrata("HIGH")
 
     frame:SetBackdrop({
@@ -50,6 +74,9 @@ function FUA:CreateUI()
     frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", 12, -8)
     frame.title:SetText("FUA | Midnight Falls")
+    if not self.showOnLogin then
+        frame:Hide()
+    end
 
     local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
     closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 2, 2)
