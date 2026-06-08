@@ -9,9 +9,9 @@
 FUA.lua
 Data.lua
 Order.lua
-Encounter.lua
 Chat.lua
+Encounter.lua
+Communication.lua
 UI.lua
 Commands.lua
-Communication.lua
 Init.lua

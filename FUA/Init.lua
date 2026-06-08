@@ -23,30 +23,40 @@ local addonName, FUA = ...
 -----------------------------------------------------------------------
 -- Runtime Initialization
 -----------------------------------------------------------------------
-FUADB = FUADB or {}
 
-FUA.outputMode = FUADB.outputMode or FUA.DEFAULT_OUTPUT_MODE
-FUA.symbolCount = FUA.symbolCount or FUA.DEFAULT_SYMBOL_COUNT
+local initFrame = CreateFrame("Frame")
+initFrame:RegisterEvent("ADDON_LOADED")
 
-FUA.reverseOrder = FUADB.reverseOrder
-if FUA.reverseOrder == nil then
-    FUA.reverseOrder = true
-end
+initFrame:SetScript("OnEvent", function(_, event, loadedAddon)
+    if loadedAddon ~= addonName then
+        return
+    end
 
-FUA.showOnLogin = FUADB.showOnLogin or false
+    FUADB = FUADB or {}
 
------------------------------------------------------------------------
--- Addon Startup
------------------------------------------------------------------------
+    FUA.outputMode = FUADB.outputMode or FUA.DEFAULT_OUTPUT_MODE
+    FUA.symbolCount = FUA.DEFAULT_SYMBOL_COUNT
 
-FUA:CreateUI()
-FUA:RegisterEncounterEvents()
-FUA:RegisterCommands()
-FUA:UpdateDifficulty()
-FUA:UpdateDisplay()
+    FUA.reverseOrder = FUADB.reverseOrder
+    if FUA.reverseOrder == nil then
+        FUA.reverseOrder = true
+    end
 
------------------------------------------------------------------------
--- Interapp Comms
------------------------------------------------------------------------
+    FUA.showOnLogin = FUADB.showOnLogin == true
 
-C_ChatInfo.RegisterAddonMessagePrefix("FUA")
+    -----------------------------------------------------------------------
+    -- Addon Startup
+    -----------------------------------------------------------------------
+
+    FUA:CreateUI()
+    FUA:RegisterEncounterEvents()
+    FUA:RegisterCommands()
+    FUA:UpdateDifficulty()
+    FUA:UpdateDisplay()
+
+    -----------------------------------------------------------------------
+    -- Interapp Comms
+    -----------------------------------------------------------------------
+
+    C_ChatInfo.RegisterAddonMessagePrefix("FUA")
+end)

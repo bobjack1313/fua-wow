@@ -118,10 +118,11 @@ function FUA:CreateUI()
 
     local function ToggleReverse()
         self.reverseOrder = not self.reverseOrder
-
         FUADB.reverseOrder = self.reverseOrder
 
-        UpdateReverseButton()
+        reverseButton:SetText(self.reverseOrder and "Clockwise" or "Counter Clockwise")
+
+        print("Saved reverse:", FUADB.reverseOrder)
         self:UpdateDisplay()
     end
 
@@ -148,7 +149,8 @@ function FUA:CreateUI()
 
         FUADB.outputMode = self.outputMode
 
-        UpdateOutputButton()
+        outputButton:SetText(self.outputMode == "markers" and "Markers" or "Characters")
+        print("Saved reverseOrder:", FUADB.reverseOrder)
         self:UpdateDisplayFont()
         self:UpdateDisplay()
     end
