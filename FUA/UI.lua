@@ -48,15 +48,23 @@ function FUA:CreateUI()
     frame:SetScript("OnDragStart", frame.StartMoving)
 
     frame:SetScript("OnDragStop", function(self)
-    self:StopMovingOrSizing()
+        self:StopMovingOrSizing()
 
-    local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
-        FUADB.position = {
-            point = point,
-            relativePoint = relativePoint,
-            x = xOfs,
-            y = yOfs,
-        }
+        local point, _, relativePoint, xOfs, yOfs = self:GetPoint()
+            FUADB.position = {
+                point = point,
+                relativePoint = relativePoint,
+                x = xOfs,
+                y = yOfs,
+            }
+    end)
+
+    frame:SetScript("OnShow", function()
+        FUADB.showOnLogin = true
+    end)
+
+    frame:SetScript("OnHide", function()
+        FUADB.showOnLogin = false
     end)
 
     frame:SetFrameStrata("HIGH")
@@ -97,17 +105,21 @@ function FUA:CreateUI()
     local reverseButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
     reverseButton:SetSize(130, 22)
     reverseButton:SetPoint("TOP", frame, "TOP", 75, -25)
-    reverseButton:SetText("Clockwise")
 
-    local function ToggleReverse()
-        self.reverseOrder = not self.reverseOrder
-
+    local function UpdateReverseButton()
         if self.reverseOrder then
             reverseButton:SetText("Clockwise")
         else
             reverseButton:SetText("Counter Clockwise")
         end
+    end
 
+    local function ToggleReverse()
+        self.reverseOrder = not self.reverseOrder
+
+        FUADB.reverseOrder = self.reverseOrder
+
+        UpdateReverseButton()
         self:UpdateDisplay()
     end
 
@@ -116,22 +128,34 @@ function FUA:CreateUI()
     local outputButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
     outputButton:SetSize(100, 22)
     outputButton:SetPoint("TOP", frame, "TOP", -75, -25)
-    outputButton:SetText("Characters")
+
+    local function UpdateOutputButton()
+        if self.outputMode == "markers" then
+            outputButton:SetText("Markers")
+        else
+            outputButton:SetText("Characters")
+        end
+    end
 
     local function ToggleOutputMode()
         if self.outputMode == "char" then
             self.outputMode = "markers"
-            outputButton:SetText("Markers")
         else
             self.outputMode = "char"
-            outputButton:SetText("Characters")
         end
 
+        FUADB.outputMode = self.outputMode
+
+        UpdateOutputButton()
         self:UpdateDisplayFont()
         self:UpdateDisplay()
     end
 
     outputButton:SetScript("OnClick", ToggleOutputMode)
+
+    -- Synchronize button state from saved settings
+    UpdateReverseButton()
+    UpdateOutputButton()
 
     -----------------------------------------------------------------------
     -- Display Area
