@@ -82,7 +82,9 @@ function FUA:CreateUI()
     frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", 12, -8)
     frame.title:SetText("FUA | Midnight Falls")
-    if not self.showOnLogin then
+    if self.showOnLogin then
+        frame:Show()
+    else
         frame:Hide()
     end
 
@@ -156,6 +158,8 @@ function FUA:CreateUI()
     -- Synchronize button state from saved settings
     UpdateReverseButton()
     UpdateOutputButton()
+    self:UpdateDisplayFont()
+    self:UpdateDisplay()
 
     -----------------------------------------------------------------------
     -- Display Area
