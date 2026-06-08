@@ -10,7 +10,7 @@ commFrame:SetScript("OnEvent", function(_, _, prefix, message, channel, sender)
         return
     end
 
-    print("|cff00ff00FUA COMM|r:", message, "from", sender)
+    -- print("|cff00ff00FUA COMM|r:", message, "from", sender)
 end)
 
 function FUA:TestBroadcast()
@@ -21,5 +21,5 @@ function FUA:TestBroadcast()
         "RAID"
     )
 
-    print("FUA: Sent test message.")
+    -- print("FUA: Sent test message.")
 end

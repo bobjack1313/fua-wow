@@ -119,10 +119,7 @@ function FUA:CreateUI()
     local function ToggleReverse()
         self.reverseOrder = not self.reverseOrder
         FUADB.reverseOrder = self.reverseOrder
-
         reverseButton:SetText(self.reverseOrder and "Clockwise" or "Counter Clockwise")
-
-        print("Saved reverse:", FUADB.reverseOrder)
         self:UpdateDisplay()
     end
 
@@ -148,9 +145,7 @@ function FUA:CreateUI()
         end
 
         FUADB.outputMode = self.outputMode
-
         outputButton:SetText(self.outputMode == "markers" and "Markers" or "Characters")
-        print("Saved reverseOrder:", FUADB.reverseOrder)
         self:UpdateDisplayFont()
         self:UpdateDisplay()
     end
@@ -264,7 +259,7 @@ function FUA:CreateUI()
     local chatButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
     chatButton:SetSize(120, 28)
     chatButton:SetPoint("LEFT", clearButton, "RIGHT", 8, 0)
-    chatButton:SetText("Load Message")
+    chatButton:SetText("Prepare Message")
     chatButton:SetScript("OnClick", function()
         self:OpenRaidChat()
     end)

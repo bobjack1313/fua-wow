@@ -114,8 +114,5 @@ function FUA:ShowInstanceReminder()
 
     self.reminderShown = true
 
-    print("|cff00ff88FUA:|r Midnight Falls helper detected.")
-    print("|cff00ff88FUA:|r Use |cffffff00/fua|r to open the window.")
-    print("|cff00ff88FUA:|r Select rune order, then click |cffffff00Load Message|r.")
-    print("|cff00ff88FUA:|r Supports both Characters and Markers modes.")
+    print("|cff00ff88FUA:|r Midnight Falls helper ready. Use |cffffff00/fua|r to prepare rune callouts.")
 end

@@ -44,6 +44,9 @@ initFrame:SetScript("OnEvent", function(_, event, loadedAddon)
 
     FUA.showOnLogin = FUADB.showOnLogin == true
 
+    -- print("FUA DB loaded:", FUADB.outputMode, FUADB.reverseOrder, FUADB.showOnLogin)
+    -- print("FUA runtime:", FUA.outputMode, FUA.reverseOrder, FUA.showOnLogin)
+
     -----------------------------------------------------------------------
     -- Addon Startup
     -----------------------------------------------------------------------
