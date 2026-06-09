@@ -2,7 +2,7 @@
 ## Title: FUA
 ## Notes: Lightweight raid communication assistance for Midnight Falls.
 ## Author: Mezcal
-## Version: 0.1.0
+## Version: 0.2.0
 ## IconTexture: Interface\AddOns\FUA\textures\fua_icon
 ## SavedVariables: FUADB
 
@@ -12,6 +12,9 @@ Order.lua
 Chat.lua
 Encounter.lua
 Communication.lua
-UI.lua
+UI/MainFrame.lua
+UI/Diagram.lua
+UI/Controls.lua
+UI/Options.lua
 Commands.lua
 Init.lua
