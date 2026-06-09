@@ -24,6 +24,12 @@ FUA intentionally follows a simple, player-driven design philosophy. The addon h
 * Automatic detection of raid leadership privileges.
 * Optional encounter detection support.
 * Lightweight UI with minimal screen impact.
+* Encounter diagram with visual position assignments.
+* Dynamic difficulty-aware position layouts.
+* Custom L'ura encounter artwork.
+* Visual rune assignment tracking.
+* Persistent UI settings.
+* Dedicated options panel.
 
 ## Design Philosophy
 
@@ -62,16 +68,21 @@ Additional commands:
 
 1. Click each symbol as it appears.
 2. Symbols may only be selected once.
-3. The current sequence is displayed in the center panel.
+3. The current input sequence is displayed in the feedback panel.
+4. The encounter diagram updates automatically to show final player positions.
 
-### Direction Mode
+### Options Direction Mode
+
+![FUA options panel](screenshots/fua-options-window.png)
 
 The direction toggle switches between:
 
 * Clockwise
 * Counter Clockwise
 
-This changes the displayed and prepared order to match different raid positioning preferences.
+This changes the encounter positioning strategy used by the visual diagram and prepared message output.
+
+The feedback display continues to show the symbols in the order they were entered.
 
 ### Output Modes
 
@@ -82,7 +93,6 @@ Displays and prepares messages using shorthand notation:
 ```text
 [ O ] [ T ] [ <> ] [ V ] [ X ]
 ```
-![FUA character mode](screenshots/fua-character-mode.png)
 
 #### Markers
 
@@ -91,7 +101,7 @@ Displays raid marker icons in the addon window and prepares the equivalent raid 
 ```text
 {rt2} {rt1} {rt3} {rt4} {rt7}
 ```
-![FUA raid marker mode](screenshots/fua-marker-mode.png)
+![FUA raid marker mode](screenshots/fua-chat-output.png)
 
 ### Sending Messages
 
@@ -101,16 +111,18 @@ FUA prepares the assignment message for you, but does not send it automatically.
 
 To send a prepared assignment:
 
-1. Open the chat channel you wish to use (Raid Warning, Raid, Instance, Party, etc.).
-2. Build the rune order in FUA.
-3. Click **Prepare Message**.
-4. Copy the prepared text.
-5. Close the prepared message window if needed.
-6. Paste the message into chat.
-7. Press **Enter** to send.
+1. Build the rune order in FUA.
+2. Click **Prepare Message**.
+3. Review the generated message in the chat edit box.
+4. Press **Enter** to send.
+
+FUA never sends chat messages automatically. The player remains responsible for reviewing and sending all communications.
 
 This workflow complies with Blizzard's restrictions while still allowing FUA to quickly generate accurate rune assignments during the encounter.
 
+Note: Additional steps need to be taken to post the message to the raid or raid warning. After hitting 'Prepare Message', I use: CTRL-A, CTRL-V, ESC, ENTER, /rw, CTRL-V, ENTER
+
+There are a few ways to do this, find one that you like.
 
 ## Encounter Support
 
@@ -146,10 +158,13 @@ World of Warcraft/_retail_/Interface/AddOns/
 
 Future releases may include:
 
-* Visual position assignment assistance.
 * Automatic parsing of FUA-formatted raid messages.
+* Player assignment mode.
+* Shared FUA communication between raid members.
 * Shared encounter displays between players using FUA.
+* Automatic position highlighting.
 * Additional encounter support.
+
 
 ## About the Name
 

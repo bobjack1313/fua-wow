@@ -136,6 +136,7 @@ function FUA:UpdateDisplay()
         self.countText:SetText(#self.order .. "/" .. self.symbolCount)
     end
 
+    self:UpdatePositionLayout()
     self:UpdatePositionSlots()
 end
 

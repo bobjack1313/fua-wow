@@ -24,16 +24,16 @@ local addonName, FUA = ...
 
 function FUA:GetChatPrefix()
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-        return "/instance FUA: Rune order - "
+        return "/instance FUA:  "
     elseif IsInRaid() and (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
-        return "/rw FUA: Rune order - "
+        return "/rw FUA:  "
     elseif IsInRaid() then
-        return "/raid FUA: Rune order - "
+        return "/raid FUA:  "
     elseif IsInGroup() then
-        return "/party FUA: Rune order - "
+        return "/party FUA:  "
     end
 
-    return "/say FUA: Rune order - "
+    return "/say FUA:  "
 end
 
 -----------------------------------------------------------------------
@@ -41,7 +41,7 @@ end
 -----------------------------------------------------------------------
 
 function FUA:OpenRaidChat()
-    local text = self:GetChatOrderString()
+    local text = self:GetPreparedMessageOrderString()
 
     if text == "" then
         print("|cffff5555FUA:|r No order built yet.")

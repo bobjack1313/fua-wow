@@ -28,6 +28,7 @@ local addonName, FUA = ...
 function FUA:UpdateDifficulty()
 
     local _, _, difficultyID = GetInstanceInfo()
+    difficultyID = FUA_DEBUG_DIFFICULTY or difficultyID
 
     local difficultyName = "Unknown"
 

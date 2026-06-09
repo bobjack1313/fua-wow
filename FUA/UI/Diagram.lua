@@ -7,12 +7,18 @@
 
 local addonName, FUA = ...
 
-local POSITION_LAYOUT = {
-    [5] = { x = -122, y =  10 },
-    [1] = { x =  122, y =  10 },
-    [4] = { x =  -58, y = -46 },
-    [3] = { x =    0, y = -46 },
-    [2] = { x =   58, y = -46 },
+local POSITION_LAYOUT_5 = {
+    [5] = { x = -115, y =  10 },
+    [1] = { x =  115, y =  10 },
+    [4] = { x =  -65, y = -52 },
+    [3] = { x =    0, y = -52 },
+    [2] = { x =   65, y = -52 },
+}
+
+local POSITION_LAYOUT_3 = {
+    [1] = { x =  72, y = -52 },
+    [2] = { x =   0, y = -52 },
+    [3] = { x = -72, y = -52 },
 }
 
 function FUA:CreateDiagram()
@@ -36,22 +42,24 @@ function FUA:CreateDiagram()
     luraPlate:SetBackdropBorderColor(0.55, 0.25, 0.85, 0.52)
     self.luraPlate = luraPlate
 
-    local luraText = luraPlate:CreateFontString(nil, "OVERLAY", "GameFontHighlightLarge")
-    luraText:SetPoint("CENTER", luraPlate, "CENTER", 0, 0)
-    luraText:SetText("L'ura")
-    luraText:SetTextColor(0.8, 0.55, 1.0)
-    self.luraText = luraText
+    local luraTexture = luraPlate:CreateTexture(nil, "ARTWORK")
+    luraTexture:SetPoint("TOPLEFT", luraPlate, "TOPLEFT", 3, -3)
+    luraTexture:SetPoint("BOTTOMRIGHT", luraPlate, "BOTTOMRIGHT", -3, 3)
+    luraTexture:SetTexture("Interface\\AddOns\\FUA\\textures\\lura.png")
+
+    self.luraTexture = luraTexture
 
     self.positionFrames = {}
 
-    for position, offset in pairs(POSITION_LAYOUT) do
+    for position = 1, 5 do
+        local offset = POSITION_LAYOUT_5[position]
         self.positionFrames[position] = self:CreatePositionSlot(diagram, position, offset.x, offset.y)
     end
 end
 
 function FUA:CreatePositionSlot(parent, position, x, y)
     local slot = CreateFrame("Button", nil, parent, "BackdropTemplate")
-    slot:SetSize(44, 44)
+    slot:SetSize(54, 54)
     slot:SetPoint("CENTER", parent, "CENTER", x, y)
     slot.position = position
 
@@ -65,13 +73,13 @@ function FUA:CreatePositionSlot(parent, position, x, y)
     slot:SetBackdropBorderColor(0.50, 0.50, 0.60, 0.55)
 
     local number = slot:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    number:SetPoint("TOP", slot, "TOP", 0, -1)
+    number:SetPoint("TOP", slot, "TOP", 0, -3)
     number:SetText(position)
     slot.numberText = number
 
     local icon = slot:CreateTexture(nil, "ARTWORK")
-    icon:SetSize(26, 26)
-    icon:SetPoint("CENTER", slot, "CENTER", 0, -4)
+    icon:SetSize(40, 40)
+    icon:SetPoint("CENTER", slot, "CENTER", 0, -6)
     icon:Hide()
     slot.icon = icon
 
@@ -104,6 +112,27 @@ function FUA:UpdatePositionSlots()
             slot:SetBackdropColor(0.18, 0.12, 0.28, 0.85)
         else
             slot:SetBackdropColor(0.02, 0.02, 0.03, 0.50)
+        end
+    end
+end
+
+function FUA:UpdatePositionLayout()
+    local layout = self.symbolCount == 3 and POSITION_LAYOUT_3 or POSITION_LAYOUT_5
+
+    for position = 1, 5 do
+        local slot = self.positionFrames[position]
+        local offset = layout[position]
+
+        if slot and offset then
+            slot:ClearAllPoints()
+            slot:SetPoint("CENTER", self.diagramFrame, "CENTER", offset.x, offset.y)
+            slot:Show()
+
+            if slot.numberText then
+                slot.numberText:SetText(position)
+            end
+        elseif slot then
+            slot:Hide()
         end
     end
 end

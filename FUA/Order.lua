@@ -37,32 +37,6 @@ end
 -- Order String Construction
 -----------------------------------------------------------------------
 
--- Build the display/chat string using the configured order direction.
--- function FUA:BuildOrderString(useDisplay)
---     local output = {}
-
---     for i = 1, #self.order do
---         local index = self.reverseOrder and (#self.order - i + 1) or i
---         local symbol = self.order[index]
-
---         if useDisplay then
---             table.insert(output, self:GetDisplaySymbolText(symbol))
---         else
---             table.insert(output, self:GetChatSymbolText(symbol))
---         end
---     end
-
---     return table.concat(output, "    ")
--- end
-
--- function FUA:GetDisplayOrderString()
---     return self:BuildOrderString(true)
--- end
-
--- function FUA:GetChatOrderString()
---     return self:BuildOrderString(false)
--- end
-
 function FUA:BuildInputOrderString(useDisplay)
     local output = {}
 
@@ -85,7 +59,27 @@ end
 
 -- Changing to where the chat display string shows true input
 function FUA:GetChatOrderString()
-    return self:BuildInputOrderString(false)
+    local output = {}
+    local symbols = self:GetStrategyOrderedSymbols()
+
+    for _, symbol in ipairs(symbols) do
+        table.insert(output, self:GetChatSymbolText(symbol))
+    end
+
+    return table.concat(output, "    ")
+end
+
+function FUA:GetPreparedMessageOrderString()
+    local output = {}
+
+    for i = 1, #self.order do
+        local index = self.reverseOrder and (#self.order - i + 1) or i
+        local symbol = self.order[index]
+
+        table.insert(output, self:GetChatSymbolText(symbol))
+    end
+
+    return table.concat(output, "    ")
 end
 
 function FUA:GetStrategyOrderedSymbols()
