@@ -38,12 +38,36 @@ end
 -----------------------------------------------------------------------
 
 -- Build the display/chat string using the configured order direction.
-function FUA:BuildOrderString(useDisplay)
+-- function FUA:BuildOrderString(useDisplay)
+--     local output = {}
+
+--     for i = 1, #self.order do
+--         local index = self.reverseOrder and (#self.order - i + 1) or i
+--         local symbol = self.order[index]
+
+--         if useDisplay then
+--             table.insert(output, self:GetDisplaySymbolText(symbol))
+--         else
+--             table.insert(output, self:GetChatSymbolText(symbol))
+--         end
+--     end
+
+--     return table.concat(output, "    ")
+-- end
+
+-- function FUA:GetDisplayOrderString()
+--     return self:BuildOrderString(true)
+-- end
+
+-- function FUA:GetChatOrderString()
+--     return self:BuildOrderString(false)
+-- end
+
+function FUA:BuildInputOrderString(useDisplay)
     local output = {}
 
     for i = 1, #self.order do
-        local index = self.reverseOrder and (#self.order - i + 1) or i
-        local symbol = self.order[index]
+        local symbol = self.order[i]
 
         if useDisplay then
             table.insert(output, self:GetDisplaySymbolText(symbol))
@@ -56,11 +80,23 @@ function FUA:BuildOrderString(useDisplay)
 end
 
 function FUA:GetDisplayOrderString()
-    return self:BuildOrderString(true)
+    return self:BuildInputOrderString(true)
 end
 
+-- Changing to where the chat display string shows true input
 function FUA:GetChatOrderString()
-    return self:BuildOrderString(false)
+    return self:BuildInputOrderString(false)
+end
+
+function FUA:GetStrategyOrderedSymbols()
+    local ordered = {}
+
+    for i = 1, #self.order do
+        local index = self.reverseOrder and (#self.order - i + 1) or i
+        table.insert(ordered, self.order[index])
+    end
+
+    return ordered
 end
 
 -----------------------------------------------------------------------

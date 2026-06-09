@@ -59,8 +59,8 @@ FUA.symbols = {
     {
         label = "T",
         char = "T",
-        marker = "{rt1}",
-        displayMarker = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:22:22|t",
+        marker = "T",
+        displayMarker = "T",
         texture = "Interface\\AddOns\\FUA\\textures\\tee.png",
         color = {1.0, 0.82, 0.0, 0.75}
     },

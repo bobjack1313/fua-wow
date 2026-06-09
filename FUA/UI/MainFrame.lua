@@ -77,7 +77,7 @@ function FUA:CreateMainFrame()
         insets = { left = 4, right = 4, top = 4, bottom = 4 },
     })
 
-    frame:SetBackdropColor(0.02, 0.02, 0.03, 0.62)
+    frame:SetBackdropColor(0.02, 0.02, 0.03, 0.70)
     frame:SetBackdropBorderColor(0.35, 0.35, 0.45, 0.85)
 
     frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -97,7 +97,7 @@ function FUA:CreateMainFrame()
 
     local optionsButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
     optionsButton:SetSize(32, 22)
-    optionsButton:SetPoint("TOPRIGHT", closeButton, "BOTTOMRIGHT", -4, -2)
+    optionsButton:SetPoint("TOPRIGHT", closeButton, "BOTTOMRIGHT", -6, -2)
     optionsButton:SetText("Opt")
     optionsButton:SetScript("OnClick", function()
         self:ToggleOptionsWindow()

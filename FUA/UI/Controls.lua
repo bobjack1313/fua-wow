@@ -15,7 +15,7 @@ function FUA:CreateControls()
     -----------------------------------------------------------------------
 
     local displayBox = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-    displayBox:SetSize(180, 20)
+    displayBox:SetSize(180, 25)
     displayBox:SetPoint("TOPLEFT", self.divider, "BOTTOMLEFT", -20, -6)
     displayBox:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
@@ -29,7 +29,7 @@ function FUA:CreateControls()
 
     local displayText = displayBox:CreateFontString(nil, "OVERLAY")
     displayText:SetPoint("CENTER", displayBox, "CENTER", 0, 0)
-    displayText:SetFont("Fonts\\FRIZQT__.TTF", 12, "OUTLINE")
+    displayText:SetFont("Fonts\\FRIZQT__.TTF", 8, "OUTLINE")
     displayText:SetTextColor(1, 0.82, 0)
     self.displayText = displayText
 
@@ -48,7 +48,7 @@ function FUA:CreateControls()
         button:SetSize(runeSize, runeSize)
 
         if i == 1 then
-            button:SetPoint("TOPLEFT", displayBox, "BOTTOMLEFT", 0, -8)
+            button:SetPoint("TOPLEFT", displayBox, "BOTTOMLEFT", 0, -4)
         else
             button:SetPoint("LEFT", previousButton, "RIGHT", runeGap, 0)
         end
@@ -60,8 +60,8 @@ function FUA:CreateControls()
             insets = { left = 3, right = 3, top = 3, bottom = 3 },
         })
 
-        button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.55)
-        button:SetBackdropBorderColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.45)
+        button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.75)
+        button:SetBackdropBorderColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.55)
 
         local icon = button:CreateTexture(nil, "ARTWORK")
         icon:SetPoint("TOPLEFT", button, "TOPLEFT", 5, -5)
@@ -74,8 +74,8 @@ function FUA:CreateControls()
         end)
 
         button:SetScript("OnEnter", function()
-            button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.78)
-            button:SetBackdropBorderColor(1, 1, 1, 0.85)
+            button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.88)
+            button:SetBackdropBorderColor(1, 1, 1, 0.95)
         end)
 
         button:SetScript("OnLeave", function()
@@ -145,7 +145,7 @@ function FUA:UpdateDisplayFont()
     end
 
     if self.outputMode == "markers" then
-        self.displayText:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+        self.displayText:SetFont("Fonts\\FRIZQT__.TTF", 8, "OUTLINE")
     else
         self.displayText:SetFont("Fonts\\FRIZQT__.TTF", 12, "OUTLINE")
     end
