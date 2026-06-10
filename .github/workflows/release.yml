@@ -39,3 +39,14 @@ jobs:
         with:
           name: FUA-${{ github.ref_name }}
           path: .release/FUA-${{ github.ref_name }}.zip
+
+      - name: Upload to CurseForge
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          token: ${{ secrets.CF_API_KEY }}
+          project_id: 1564580
+          game_endpoint: wow
+          file_path: .release/FUA-${{ github.ref_name }}.zip
+          changelog: CHANGELOG.md
+          changelog_type: markdown
+          release_type: release
