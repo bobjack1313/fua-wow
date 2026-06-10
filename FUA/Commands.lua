@@ -16,11 +16,9 @@
 --   /fua hide
 --   /fua clear
 --
--- Does NOT contain:
---   * User interface creation
---   * Encounter event handling
---   * Chat message generation
---   * Order management logic
+-- Test Commands:
+--   /fua importtest
+--   /fua rwtest
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...
@@ -45,6 +43,25 @@ function FUA:RegisterCommands()
 
         elseif msg == "clear" then
             self:ClearOrder()
+
+        elseif msg == "importtest" then
+            self.isEncounterActive = true
+            self.currentImportPriority = 0
+
+            self:HandleChatAssignment(
+                "CHAT_MSG_RAID",
+                "FUA: [ <> ] [ V ] [ X ]",
+                "FUA_Test"
+            )
+
+        elseif msg == "rwtest" then
+            self.isEncounterActive = true
+
+            self:HandleChatAssignment(
+                "CHAT_MSG_RAID_WARNING",
+                "FUA: [ X ] [ V ] [ <> ]",
+                "FUA_Test"
+            )
 
         else
             self.frame:SetShown(not self.frame:IsShown())

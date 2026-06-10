@@ -9,11 +9,6 @@
 --   * Selecting the appropriate chat channel
 --   * Loading messages into the chat edit box
 --   * Message formatting for group communication
---
--- Does NOT contain:
---   * User interface code
---   * Encounter event handling
---   * Order construction logic
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...

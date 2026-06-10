@@ -20,6 +20,7 @@ local addonName, FUA = ...
 FUA.DEFAULT_SYMBOL_COUNT = 5
 FUA.DEFAULT_OUTPUT_MODE = "char"
 FUA_DEBUG_DIFFICULTY = nil
+FUA.DEFAULT_COLLAPSED = false
 
 -----------------------------------------------------------------------
 -- Encounter Data

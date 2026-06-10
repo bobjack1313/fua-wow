@@ -43,6 +43,11 @@ initFrame:SetScript("OnEvent", function(_, event, loadedAddon)
     end
 
     FUA.showOnLogin = FUADB.showOnLogin == true
+    FUA.collapsed = FUADB.collapsed
+
+    if FUA.collapsed == nil then
+        FUA.collapsed = FUA.DEFAULT_COLLAPSED
+    end
 
     -- print("FUA DB loaded:", FUADB.outputMode, FUADB.reverseOrder, FUADB.showOnLogin)
     -- print("FUA runtime:", FUA.outputMode, FUA.reverseOrder, FUA.showOnLogin)

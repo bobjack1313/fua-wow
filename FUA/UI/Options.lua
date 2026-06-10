@@ -8,10 +8,15 @@
 local addonName, FUA = ...
 
 local function SetButtonSelected(button, selected)
+    local text = button:GetFontString()
+    if not text then
+        return
+    end
+
     if selected then
-        button:SetNormalFontObject("GameFontHighlight")
+        text:SetTextColor(1.0, 1.0, 1.0, 1.0)
     else
-        button:SetNormalFontObject("GameFontNormal")
+        text:SetTextColor(0.60, 0.60, 0.60, 0.65)
     end
 end
 
@@ -19,7 +24,7 @@ function FUA:CreateOptionsWindow()
     local parent = self.frame
 
     local options = CreateFrame("Frame", "FUAOptionsFrame", parent, "BackdropTemplate")
-    options:SetSize(260, 180)
+    options:SetSize(200, 140)
     options:SetPoint("TOPLEFT", parent, "TOPRIGHT", 8, 0)
     options:SetFrameStrata("DIALOG")
     options:Hide()
@@ -45,30 +50,30 @@ function FUA:CreateOptionsWindow()
     end)
 
     local strategyLabel = options:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    strategyLabel:SetPoint("TOPLEFT", options, "TOPLEFT", 14, -42)
+    strategyLabel:SetPoint("TOPLEFT", options, "TOPLEFT", 14, -35)
     strategyLabel:SetText("Strategy")
 
     local clockwiseButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    clockwiseButton:SetSize(108, 22)
+    clockwiseButton:SetSize(85, 22)
     clockwiseButton:SetPoint("TOPLEFT", strategyLabel, "BOTTOMLEFT", 0, -6)
     clockwiseButton:SetText("Clockwise")
 
     local counterButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    counterButton:SetSize(126, 22)
+    counterButton:SetSize(85, 22)
     counterButton:SetPoint("LEFT", clockwiseButton, "RIGHT", 6, 0)
     counterButton:SetText("Counter")
 
     local outputLabel = options:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    outputLabel:SetPoint("TOPLEFT", clockwiseButton, "BOTTOMLEFT", 0, -18)
+    outputLabel:SetPoint("TOPLEFT", clockwiseButton, "BOTTOMLEFT", 0, -15)
     outputLabel:SetText("Output")
 
     local markersButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    markersButton:SetSize(108, 22)
+    markersButton:SetSize(85, 22)
     markersButton:SetPoint("TOPLEFT", outputLabel, "BOTTOMLEFT", 0, -6)
     markersButton:SetText("Markers")
 
     local charsButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    charsButton:SetSize(126, 22)
+    charsButton:SetSize(85, 22)
     charsButton:SetPoint("LEFT", markersButton, "RIGHT", 6, 0)
     charsButton:SetText("Characters")
 

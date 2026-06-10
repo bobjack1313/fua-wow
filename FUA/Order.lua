@@ -25,6 +25,14 @@ function FUA:GetSymbolText(symbol)
     return symbol.char
 end
 
+function FUA:GetDisplaySymbolText(symbol)
+    if self.outputMode == "markers" then
+        return symbol.displayMarker
+    end
+
+    return "[ " .. symbol.char .. " ]"
+end
+
 function FUA:GetChatSymbolText(symbol)
     if self.outputMode == "markers" then
         return "[ " .. symbol.marker .. " ]"

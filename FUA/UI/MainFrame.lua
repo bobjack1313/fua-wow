@@ -17,6 +17,7 @@ function FUA:CreateUI()
     self:UpdateDifficulty()
     self:UpdateDisplayFont()
     self:UpdateDisplay()
+    self:ApplyCollapsedState()
 
     if self.showOnLogin then
         self.frame:Show()
@@ -29,7 +30,7 @@ function FUA:CreateMainFrame()
     local frame = CreateFrame("Frame", "FUAFrame", UIParent, "BackdropTemplate")
     self.frame = frame
 
-    frame:SetSize(400, 260)
+    frame:SetSize(360, 280)
 
     if FUADB.position then
         frame:SetPoint(
@@ -105,13 +106,66 @@ function FUA:CreateMainFrame()
     self.optionsButton = optionsButton
 end
 
+function FUA:ApplyCollapsedState()
+    if not self.frame then
+        return
+    end
+
+    if self.collapseButton then
+        self.collapseButton:SetText(self.collapsed and "Expand" or "Collapse")
+    end
+
+    if self.compactClearButton then
+        self.compactClearButton:SetShown(self.collapsed)
+    end
+
+    if self.fullControlsFrame then
+        self.fullControlsFrame:SetShown(not self.collapsed)
+    end
+
+    if self.collapsed then
+        self.frame:SetSize(360, 200)
+    else
+        self.frame:SetSize(360, 280)
+    end
+
+    if self.divider then
+        self.divider:ClearAllPoints()
+        self.divider:SetPoint("LEFT", self.frame, "LEFT", 10, 0)
+        self.divider:SetPoint("RIGHT", self.frame, "RIGHT", -10, 0)
+
+        if self.collapsed then
+            self.divider:SetPoint("BOTTOM", self.frame, "BOTTOM", 10, 0)
+        else
+            self.divider:SetPoint("BOTTOM", self.frame, "BOTTOM", 10, 80)
+        end
+
+        self.divider:SetHeight(1)
+    end
+
+    if self.divider then
+        self.divider:SetShown(not self.collapsed)
+    end
+
+end
+
 function FUA:CreateDivider()
 
     local divider = self.frame:CreateTexture(nil, "BORDER")
 
     divider:SetColorTexture(0.55, 0.55, 0.65, 0.35)
-    divider:SetSize(320, 1)
-    divider:SetPoint("TOP", self.diagramFrame, "BOTTOM", 0, 0)
+    divider:SetPoint("LEFT", self.frame, "LEFT", 10, 0)
+    divider:SetPoint("RIGHT", self.frame, "RIGHT", -10, 0)
+    divider:SetPoint("BOTTOM", self.frame, "BOTTOM", 10, 80)
+    divider:SetHeight(1)
 
     self.divider = divider
 end
+
+function FUA:ToggleCollapsed()
+    self.collapsed = not self.collapsed
+    FUADB.collapsed = self.collapsed
+
+    self:ApplyCollapsedState()
+end
+

@@ -10,14 +10,12 @@
 --   * Encounter event registration
 --   * Automatic order reset on pull
 --   * Encounter-specific addon behavior
---
--- Does NOT contain:
---   * User interface code
---   * Chat message generation
---   * Order construction logic
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...
+
+FUA.isEncounterActive = false
+FUA.currentImportPriority = 0
 
 -----------------------------------------------------------------------
 -- Difficulty Management
@@ -69,9 +67,13 @@ function FUA:RegisterEncounterEvents()
     encounterFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     encounterFrame:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
     encounterFrame:RegisterEvent("ENCOUNTER_START")
+    encounterFrame:RegisterEvent("ENCOUNTER_END")
 
     encounterFrame:SetScript("OnEvent", function(_, event, encounterID)
         if event == "PLAYER_ENTERING_WORLD" then
+            self.isEncounterActive = false
+            self.currentImportPriority = 0
+
             self:UpdateDifficulty()
             self:UpdateDisplay()
             self:ShowInstanceReminder()
@@ -80,12 +82,24 @@ function FUA:RegisterEncounterEvents()
 
         if event == "ENCOUNTER_START" then
             if encounterID == self.MIDNIGHT_FALLS_ENCOUNTER_ID then
+                self.isEncounterActive = true
+                self.currentImportPriority = 0
+
                 self:UpdateDifficulty()
                 self:ClearOrder()
 
                 if self.frame and not self.frame:IsShown() then
                     self.frame:Show()
                 end
+            end
+
+            return
+        end
+
+        if event == "ENCOUNTER_END" then
+            if encounterID == self.MIDNIGHT_FALLS_ENCOUNTER_ID then
+                self.isEncounterActive = false
+                self.currentImportPriority = 0
             end
 
             return
