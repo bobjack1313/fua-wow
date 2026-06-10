@@ -14,22 +14,23 @@ FUA intentionally follows a simple, player-driven design philosophy. The addon h
 
 * Custom symbol buttons with visual icon support.
 * Difficulty-aware symbol limits.
-
   * LFR / Normal: 3 symbols
   * Heroic / Mythic: 5 symbols
 * Duplicate prevention.
-* Clockwise and Counter Clockwise ordering.
+* Clockwise and Counter Clockwise ordering for strategy.
 * Character and Raid Marker output modes.
 * Automatic message preparation.
 * Automatic detection of raid leadership privileges.
-* Optional encounter detection support.
-* Lightweight UI with minimal screen impact.
+* Encounter detection support.
+* Encounter-specific assignment import support.
+* Assignment import priority system.
+* Compact (collapsed) diagram mode.
 * Encounter diagram with visual position assignments.
 * Dynamic difficulty-aware position layouts.
-* Custom L'ura encounter artwork.
-* Visual rune assignment tracking.
+* Visual rune assignment tracking with L'ura positioning.
 * Persistent UI settings.
 * Dedicated options panel.
+* Lightweight UI with minimal screen impact.
 
 ## Design Philosophy
 
@@ -62,6 +63,7 @@ Additional commands:
 /fua show
 /fua hide
 /fua clear
+/fua help
 ```
 
 ### Building an Order
@@ -73,7 +75,7 @@ Additional commands:
 
 ### Options Direction Mode
 
-![FUA options panel](screenshots/fua-options-window.png)
+![FUA options panel](screenshots/fua-options-panel.png)
 
 The direction toggle switches between:
 
@@ -93,6 +95,7 @@ Displays and prepares messages using shorthand notation:
 ```text
 [ O ] [ T ] [ <> ] [ V ] [ X ]
 ```
+![FUA character mode](screenshots/fua-character-mode.png)
 
 #### Markers
 
@@ -122,13 +125,53 @@ This workflow complies with Blizzard's restrictions while still allowing FUA to 
 
 Note: Additional steps need to be taken to post the message to the raid or raid warning. After hitting 'Prepare Message', I use: CTRL-A, CTRL-V, ESC, ENTER, /rw, CTRL-V, ENTER
 
-There are a few ways to do this, find one that you like.
+There are a few ways to do this, find one that you like. Outside macros are king.
 
 ## Encounter Support
 
 FUA can optionally detect specific encounters and automatically display the window when the encounter begins.
 
 This functionality is intended only as a convenience feature and does not automate any gameplay actions.
+
+### Assignment Import
+
+FUA can import assignments posted in chat by other players using FUA-compatible formatting.
+
+Supported channels:
+
+* Raid Warning
+* Raid Chat
+* Instance Chat
+
+### Import Priority
+
+Assignment imports follow the following priority:
+
+1. Raid Warning
+2. Raid Chat
+3. Instance Chat
+
+Higher-priority assignments automatically replace lower-priority assignments.
+
+Assignments from the same priority level may overwrite previous assignments, allowing raid leaders to quickly correct mistakes.
+
+### Encounter Protection
+
+Assignment imports are only accepted while the Midnight Falls encounter is active.
+
+### Compact Diagram Mode
+
+Players who only need to view assignments may collapse the interface into a compact diagram-only mode.
+
+Collapsed mode displays:
+
+* Encounter diagram
+* Expand button
+* Quick Clear button
+
+![FUA collapsed window](screenshots/fua-mainframe-collapsed.png)
+
+This significantly reduces screen space usage during progression attempts.
 
 ## Compatibility
 
@@ -158,13 +201,9 @@ World of Warcraft/_retail_/Interface/AddOns/
 
 Future releases may include:
 
-* Automatic parsing of FUA-formatted raid messages.
 * Player assignment mode.
-* Shared FUA communication between raid members.
-* Shared encounter displays between players using FUA.
 * Automatic position highlighting.
 * Additional encounter support.
-
 
 ## About the Name
 

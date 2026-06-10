@@ -44,6 +44,17 @@ function FUA:RegisterCommands()
         elseif msg == "clear" then
             self:ClearOrder()
 
+        elseif msg == "help" then
+            print("|cff00ff88FUA Help|r")
+            print("/fua - Toggle the window")
+            print("/fua show - Show the window")
+            print("/fua hide - Hide the window")
+            print("/fua clear - Clear the current order")
+            print("Build the rune order, review the diagram, then click Prepare Message. Next, manually send to raid to pass along rune configuration.")
+
+        elseif msg == "version" then
+            print("|cff00ff88FUA:|r Version 0.3.0")
+
         elseif msg == "importtest" then
             self.isEncounterActive = true
             self.currentImportPriority = 0
