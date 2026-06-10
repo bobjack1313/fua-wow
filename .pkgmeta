@@ -1,4 +1,5 @@
-package-as: FUA
+move-folders:
+  FUA: FUA
 
 manual-changelog: CHANGELOG.md
 license-output: LICENSE
