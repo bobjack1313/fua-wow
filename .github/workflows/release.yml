@@ -30,8 +30,7 @@ jobs:
           cp README.md FUA/README.md
           cp CHANGELOG.md FUA/CHANGELOG.md
           cp LICENSE FUA/LICENSE
-          cd FUA
-          zip -r ../.release/FUA-${GITHUB_REF_NAME}.zip . \
+          zip -r .release/FUA-${GITHUB_REF_NAME}.zip FUA \
             -x "*.DS_Store" \
             -x "__MACOSX/*"
 
