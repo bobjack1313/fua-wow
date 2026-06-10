@@ -16,7 +16,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Package addon
-        uses: BigWigsMods/packager@v2
-        env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      - name: Run tests
+        run: ./scripts/run-tests.sh
+
+      - name: Prepare package
+        run: |
+          mkdir -p .release
+          cp README.md FUA/README.md
+          cp CHANGELOG.md FUA/CHANGELOG.md
+          cp LICENSE FUA/LICENSE
+          cd FUA
+          zip -r ../.release/FUA-${GITHUB_REF_NAME}.zip . \
+            -x "*.DS_Store" \
+            -x "__MACOSX/*"
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FUA-${{ github.ref_name }}
+          path: .release/FUA-${{ github.ref_name }}.zip
