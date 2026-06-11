@@ -47,6 +47,7 @@ jobs:
           project_id: 1564580
           game_endpoint: wow
           file_path: .release/FUA-${{ github.ref_name }}.zip
+          game_versions: "12.0.7,12.0.5"
           changelog: CHANGELOG.md
           changelog_type: markdown
           release_type: release
