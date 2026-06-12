@@ -12,4 +12,4 @@
 
 local addonName, FUA = ...
 
-FUA.VERSION = "0.4.1"
+FUA.VERSION = "0.4.2"

@@ -133,5 +133,5 @@ function FUA:ShowInstanceReminder()
 
     self.reminderShown = true
 
-    self:PrintSuccess(self.L.MSG_READY)
+    self:PrintSuccess(self.L.MF_MSG_READY)
 end
