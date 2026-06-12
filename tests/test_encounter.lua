@@ -65,6 +65,7 @@ local function resetState()
     FUA.difficultyName = nil
     FUA.isEncounterActive = false
     FUA.currentImportPriority = 99
+    FUA_DEBUG_DIFFICULTY = nil
 end
 
 -----------------------------------------------------------------------
@@ -78,7 +79,7 @@ test("UpdateDifficulty sets LFR to three symbols", function()
     FUA:UpdateDifficulty()
 
     assertEqual(FUA.symbolCount, 3)
-    assertEqual(FUA.difficultyName, "LFR")
+    assertEqual(FUA.difficultyName, FUA.L.DIFFICULTY_LFR)
 end)
 
 test("UpdateDifficulty sets Normal to three symbols", function()
@@ -88,7 +89,7 @@ test("UpdateDifficulty sets Normal to three symbols", function()
     FUA:UpdateDifficulty()
 
     assertEqual(FUA.symbolCount, 3)
-    assertEqual(FUA.difficultyName, "Normal")
+    assertEqual(FUA.difficultyName, FUA.L.DIFFICULTY_NORMAL)
 end)
 
 test("UpdateDifficulty sets Heroic to five symbols", function()
@@ -98,7 +99,7 @@ test("UpdateDifficulty sets Heroic to five symbols", function()
     FUA:UpdateDifficulty()
 
     assertEqual(FUA.symbolCount, 5)
-    assertEqual(FUA.difficultyName, "Heroic")
+    assertEqual(FUA.difficultyName, FUA.L.DIFFICULTY_HEROIC)
 end)
 
 test("UpdateDifficulty sets Mythic to five symbols", function()
@@ -108,7 +109,7 @@ test("UpdateDifficulty sets Mythic to five symbols", function()
     FUA:UpdateDifficulty()
 
     assertEqual(FUA.symbolCount, 5)
-    assertEqual(FUA.difficultyName, "Mythic")
+    assertEqual(FUA.difficultyName, FUA.L.DIFFICULTY_MYTHIC)
 end)
 
 test("UpdateDifficulty defaults unknown difficulty to Outside Raid", function()
@@ -118,7 +119,7 @@ test("UpdateDifficulty defaults unknown difficulty to Outside Raid", function()
     FUA:UpdateDifficulty()
 
     assertEqual(FUA.symbolCount, 3)
-    assertEqual(FUA.difficultyName, "Outside Raid")
+    assertEqual(FUA.difficultyName, FUA.L.DIFFICULTY_OUTSIDE_RAID)
 end)
 
 test("RegisterEncounterEvents registers expected events", function()
