@@ -17,10 +17,10 @@ FUA intentionally follows a simple, player-driven design philosophy. The addon h
   * LFR / Normal: 3 symbols
   * Heroic / Mythic: 5 symbols
 * Duplicate prevention.
+* Intelligent chat channel preparation.
 * Clockwise and Counter Clockwise ordering for strategy.
 * Character and Raid Marker output modes.
 * Automatic message preparation.
-* Automatic detection of raid leadership privileges.
 * Encounter detection support.
 * Encounter-specific assignment import support.
 * Assignment import priority system.
@@ -31,6 +31,13 @@ FUA intentionally follows a simple, player-driven design philosophy. The addon h
 * Persistent UI settings.
 * Dedicated options panel.
 * Lightweight UI with minimal screen impact.
+* Multi-language localization support.
+  * English
+  * Spanish
+  * Portuguese
+  * German
+  * French
+  * Italian
 
 ## Design Philosophy
 
@@ -108,7 +115,7 @@ Displays raid marker icons in the addon window and prepares the equivalent raid 
 
 ### Sending Messages
 
-Due to Blizzard restrictions during the Lu'a encounter, addons cannot reliably open chat channels or automatically send raid messages.
+Due to Blizzard restrictions during the L'ura encounter, addons cannot reliably open chat channels or automatically send raid messages.
 
 FUA prepares the assignment message for you, but does not send it automatically.
 
@@ -123,7 +130,7 @@ FUA never sends chat messages automatically. The player remains responsible for 
 
 This workflow complies with Blizzard's restrictions while still allowing FUA to quickly generate accurate rune assignments during the encounter.
 
-Note: Additional steps need to be taken to post the message to the raid or raid warning. After hitting 'Prepare Message', I use: CTRL-A, CTRL-V, ESC, ENTER, /rw, CTRL-V, ENTER
+Note: Additional steps need to be taken to post the message to the raid or raid warning. Prepare Message opens the generated assignment in the chat edit box for review. The player is responsible for selecting the desired chat channel and sending the message.
 
 There are a few ways to do this, find one that you like. Outside macros are king.
 
@@ -197,13 +204,29 @@ World of Warcraft/_retail_/Interface/AddOns/
 
 4. Enable FUA from the AddOns menu.
 
+## Localization
+
+FUA automatically uses the language of your World of Warcraft client.
+
+Currently supported:
+
+- English
+- Spanish
+- Portuguese
+- German
+- French
+- Italian
+
+Missing translations or corrections are welcome.
+
 ## Planned Features
 
 Future releases may include:
 
-* Player assignment mode.
-* Automatic position highlighting.
 * Additional encounter support.
+* Expanded assignment import capabilities.
+* Additional diagram and strategy tools.
+* Enhanced localization support.
 
 ## About the Name
 

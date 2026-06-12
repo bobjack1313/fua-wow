@@ -1,3 +1,48 @@
+# FUA Version 0.4.0 - 2026-06-11
+
+## Added
+
+* Localization framework with automatic client language detection.
+* English (US) localization.
+* English (UK) localization.
+* Spanish (Spain) localization.
+* Spanish (Latin America) localization.
+* Portuguese (Brazil) localization.
+* German localization.
+* French localization.
+* Italian localization.
+* Centralized color management system.
+* Centralized layout configuration system.
+* Options button icon support.
+* Additional UI configuration constants for future encounter support.
+
+## Changed
+
+* Refactored addon architecture into Core, Services, Modules, UI, and Localization components.
+* Moved encounter-specific data into encounter modules.
+* Centralized user-facing strings into locale files.
+* Replaced hardcoded UI colors with shared color definitions.
+* Replaced hardcoded UI dimensions with layout constants.
+* Standardized UI element sizing and positioning.
+* Improved options window localization support.
+* Improved maintainability for future encounter development.
+* Improved project organization and file structure.
+
+## Fixed
+
+* SavedVariables initialization and startup loading issues.
+* UI state restoration on login and reload.
+* Localization loading order issues.
+* Multiple UI constant and layout reference issues discovered during refactoring.
+* Various hardcoded text and color references throughout the addon.
+
+## Developer Notes
+
+* Established module structure for future raid and encounter support.
+* Added framework components for future settings, localization, and shared services expansion.
+
+---
+
 # Version 0.3.0
 
 ## New Features
