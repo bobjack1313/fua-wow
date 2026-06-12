@@ -10,9 +10,18 @@ local addonName, FUA = ...
 FUA.Locales = FUA.Locales or {}
 
 FUA.Locales.frFR = {
+
+    -------------------------------------------------------------------
+    -- Addon
+    -------------------------------------------------------------------
+
     ADDON_NAME = "FUA",
     TITLE = "FUA",
     VERSION_LABEL = "Version",
+
+    -------------------------------------------------------------------
+    -- Common UI
+    -------------------------------------------------------------------
 
     SHOW = "Afficher",
     HIDE = "Masquer",
@@ -23,11 +32,20 @@ FUA.Locales.frFR = {
     EXPAND = "Développer",
     COLLAPSE = "Réduire",
 
+    -------------------------------------------------------------------
+    -- Core UI
+    -------------------------------------------------------------------
+
     HUB_TITLE = "Centre FUA",
     OPTIONS_TITLE = "Options FUA",
     MINIMAP_TOOLTIP = "FUA",
 
+    -------------------------------------------------------------------
+    -- Slash Commands
+    -------------------------------------------------------------------
+
     HELP_TITLE = "Aide FUA",
+
     HELP_TOGGLE = "/fua - Afficher ou masquer la fenêtre",
     HELP_SHOW = "/fua show - Afficher la fenêtre",
     HELP_HIDE = "/fua hide - Masquer la fenêtre",
@@ -35,17 +53,29 @@ FUA.Locales.frFR = {
     HELP_USAGE =
         "Construisez l'ordre des runes, vérifiez le diagramme, puis cliquez sur Préparer le message. Envoyez ensuite le message manuellement au raid.",
 
-    MSG_READY =
+    -------------------------------------------------------------------
+    -- Status Messages
+    -------------------------------------------------------------------
+
+    MF_MSG_READY =
         "Assistant Midnight Falls prêt. Utilisez /fua pour préparer les annonces de runes.",
 
     MSG_IMPORTED =
         "Attribution importée depuis le chat.",
+
+    -------------------------------------------------------------------
+    -- Errors
+    -------------------------------------------------------------------
 
     ERR_SYMBOL_EXISTS =
         "Ce symbole est déjà sélectionné.",
 
     ERR_SYMBOL_LIMIT =
         "Limite de symboles atteinte.",
+
+    -------------------------------------------------------------------
+    -- Midnight Falls
+    -------------------------------------------------------------------
 
     ERR_NO_ORDER =
         "Aucun ordre n'a encore été créé.",

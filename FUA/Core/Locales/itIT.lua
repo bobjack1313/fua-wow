@@ -10,9 +10,18 @@ local addonName, FUA = ...
 FUA.Locales = FUA.Locales or {}
 
 FUA.Locales.itIT = {
+
+    -------------------------------------------------------------------
+    -- Addon
+    -------------------------------------------------------------------
+
     ADDON_NAME = "FUA",
     TITLE = "FUA",
     VERSION_LABEL = "Versione",
+
+    -------------------------------------------------------------------
+    -- Common UI
+    -------------------------------------------------------------------
 
     SHOW = "Mostra",
     HIDE = "Nascondi",
@@ -23,11 +32,20 @@ FUA.Locales.itIT = {
     EXPAND = "Espandi",
     COLLAPSE = "Riduci",
 
+    -------------------------------------------------------------------
+    -- Core UI
+    -------------------------------------------------------------------
+
     HUB_TITLE = "Centro FUA",
     OPTIONS_TITLE = "Opzioni FUA",
     MINIMAP_TOOLTIP = "FUA",
 
+    -------------------------------------------------------------------
+    -- Slash Commands
+    -------------------------------------------------------------------
+
     HELP_TITLE = "Aiuto FUA",
+
     HELP_TOGGLE = "/fua - Mostra o nasconde la finestra",
     HELP_SHOW = "/fua show - Mostra la finestra",
     HELP_HIDE = "/fua hide - Nasconde la finestra",
@@ -35,11 +53,19 @@ FUA.Locales.itIT = {
     HELP_USAGE =
         "Costruisci l'ordine delle rune, controlla il diagramma e fai clic su Prepara Messaggio. Poi invialo manualmente al raid.",
 
-    MSG_READY =
+    -------------------------------------------------------------------
+    -- Status Messages
+    -------------------------------------------------------------------
+
+    MF_MSG_READY =
         "Assistente Midnight Falls pronto. Usa /fua per preparare gli avvisi delle rune.",
 
     MSG_IMPORTED =
         "Assegnazione importata dalla chat.",
+
+    -------------------------------------------------------------------
+    -- Errors
+    -------------------------------------------------------------------
 
     ERR_SYMBOL_EXISTS =
         "Questo simbolo è già selezionato.",
@@ -49,6 +75,10 @@ FUA.Locales.itIT = {
 
     ERR_NO_ORDER =
         "Nessun ordine ancora creato.",
+
+    -------------------------------------------------------------------
+    -- Midnight Falls
+    -------------------------------------------------------------------
 
     MF_TITLE = "FUA | Midnight Falls",
 
