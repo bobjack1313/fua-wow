@@ -173,7 +173,7 @@ FUA.MF.UI = {
     -------------------------------------------------------------------
     -- Options.lua
     -------------------------------------------------------------------
-    OPTIONS_FRAME_WIDTH        = 210,
+    OPTIONS_FRAME_WIDTH        = 220,
     OPTIONS_FRAME_HEIGHT       = 140,
     OPTIONS_FRAME_X            = 8,
     OPTIONS_FRAME_Y            = 0,
