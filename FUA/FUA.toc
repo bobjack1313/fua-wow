@@ -1,20 +1,38 @@
 ## Interface: 120005, 120007
 ## Title: FUA
-## Notes: Lightweight raid communication assistance for Midnight Falls.
+## Notes: Modular raid and player utility tools.
 ## Author: Mezcal
-## Version: 0.3.0
-## IconTexture: Interface\AddOns\FUA\textures\fua_icon
+## Version: 0.4.0
+## IconTexture: Interface\AddOns\FUA\Textures\Core\fua_icon
 ## SavedVariables: FUADB
 
-FUA.lua
-Data.lua
-Order.lua
-Chat.lua
-Encounter.lua
-Communication.lua
-UI/MainFrame.lua
-UI/Diagram.lua
-UI/Controls.lua
-UI/Options.lua
-Commands.lua
-Init.lua
+Core/FUA.lua
+
+Core/Colors.lua
+Core/Version.lua
+Core/Settings.lua
+
+Core/Locales/enUS.lua
+Core/Locales/enGB.lua
+Core/Locales/esES.lua
+Core/Locales/ptBR.lua
+Core/Locales/deDE.lua
+Core/Locales/frFR.lua
+Core/Locales/itIT.lua
+Core/Locale.lua
+
+Modules/Encounters/MFQ/MF/Data.lua
+Modules/Encounters/MFQ/MF/Order.lua
+Modules/Encounters/MFQ/MF/Encounter.lua
+
+Services/Chat.lua
+Services/Communication.lua
+
+Modules/Encounters/MFQ/MF/UI/Layout.lua
+Modules/Encounters/MFQ/MF/UI/MainFrame.lua
+Modules/Encounters/MFQ/MF/UI/Diagram.lua
+Modules/Encounters/MFQ/MF/UI/Controls.lua
+Modules/Encounters/MFQ/MF/UI/Options.lua
+
+Core/Commands.lua
+Core/Init.lua

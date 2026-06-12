@@ -1,22 +1,24 @@
 -----------------------------------------------------------------------
 -- FUA - Midnight Falls Assignment Helper
--- File: UI/Options.lua
+-- File: Modules/Encounters/MFQ/MF/UI/Options.lua
 --
 -- Settings window for strategy/output preferences.
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...
 
-local function SetButtonSelected(button, selected)
+local UI = FUA.MF.UI
+
+local function SetButtonSelected(addon, button, selected)
     local text = button:GetFontString()
     if not text then
         return
     end
 
     if selected then
-        text:SetTextColor(1.0, 1.0, 1.0, 1.0)
+        text:SetTextColor(unpack(addon.Colors.OPTIONS_TEXT_ACTIVE))
     else
-        text:SetTextColor(0.60, 0.60, 0.60, 0.65)
+        text:SetTextColor(unpack(addon.Colors.OPTIONS_TEXT_INACTIVE))
     end
 end
 
@@ -24,8 +26,8 @@ function FUA:CreateOptionsWindow()
     local parent = self.frame
 
     local options = CreateFrame("Frame", "FUAOptionsFrame", parent, "BackdropTemplate")
-    options:SetSize(200, 140)
-    options:SetPoint("TOPLEFT", parent, "TOPRIGHT", 8, 0)
+    options:SetSize(UI.OPTIONS_FRAME_WIDTH, UI.OPTIONS_FRAME_HEIGHT)
+    options:SetPoint("TOPLEFT", parent, "TOPRIGHT", UI.OPTIONS_FRAME_X, UI.OPTIONS_FRAME_Y)
     options:SetFrameStrata("DIALOG")
     options:Hide()
     self.optionsFrame = options
@@ -33,55 +35,60 @@ function FUA:CreateOptionsWindow()
     options:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize = 16,
-        insets = { left = 4, right = 4, top = 4, bottom = 4 },
+        edgeSize = UI.OPTIONS_FRAME_BD_EDGE,
+        insets = {
+            left = UI.OPTIONS_FRAME_BD_INSET,
+            right = UI.OPTIONS_FRAME_BD_INSET,
+            top = UI.OPTIONS_FRAME_BD_INSET,
+            bottom = UI.OPTIONS_FRAME_BD_INSET
+        },
     })
-    options:SetBackdropColor(0.02, 0.02, 0.03, 0.86)
-    options:SetBackdropBorderColor(0.35, 0.35, 0.45, 0.9)
+    options:SetBackdropColor(unpack(self.Colors.OPTIONS_BACKGROUND))
+    options:SetBackdropBorderColor(unpack(self.Colors.OPTIONS_BORDER))
 
     local title = options:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    title:SetPoint("TOPLEFT", options, "TOPLEFT", 12, -10)
-    title:SetText("FUA Options")
+    title:SetPoint("TOPLEFT", options, "TOPLEFT", UI.OPTIONS_TITLE_X, UI.OPTIONS_TITLE_Y)
+    title:SetText(self.L.OPTIONS_TITLE)
 
     local closeButton = CreateFrame("Button", nil, options, "UIPanelCloseButton")
-    closeButton:SetPoint("TOPRIGHT", options, "TOPRIGHT", 2, 2)
+    closeButton:SetPoint("TOPRIGHT", options, "TOPRIGHT", UI.OPTIONS_CLOSE_BUTTON_X, UI.OPTIONS_CLOSE_BUTTON_Y)
     closeButton:SetScript("OnClick", function()
         options:Hide()
     end)
 
     local strategyLabel = options:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    strategyLabel:SetPoint("TOPLEFT", options, "TOPLEFT", 14, -35)
-    strategyLabel:SetText("Strategy")
+    strategyLabel:SetPoint("TOPLEFT", options, "TOPLEFT", UI.STRATEGY_LABEL_X, UI.STRATEGY_LABEL_Y)
+    strategyLabel:SetText(self.L.STRATEGY)
 
     local clockwiseButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    clockwiseButton:SetSize(85, 22)
-    clockwiseButton:SetPoint("TOPLEFT", strategyLabel, "BOTTOMLEFT", 0, -6)
-    clockwiseButton:SetText("Clockwise")
+    clockwiseButton:SetSize(UI.CLOCKWISE_BUTTON_WIDTH, UI.CLOCKWISE_BUTTON_HEIGHT)
+    clockwiseButton:SetPoint("TOPLEFT", strategyLabel, "BOTTOMLEFT", UI.CLOCKWISE_BUTTON_X, UI.CLOCKWISE_BUTTON_Y)
+    clockwiseButton:SetText(self.L.CLOCKWISE)
 
     local counterButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    counterButton:SetSize(85, 22)
-    counterButton:SetPoint("LEFT", clockwiseButton, "RIGHT", 6, 0)
-    counterButton:SetText("Counter")
+    counterButton:SetSize(UI.COUNTER_BUTTON_WIDTH, UI.COUNTER_BUTTON_HEIGHT)
+    counterButton:SetPoint("LEFT", clockwiseButton, "RIGHT", UI.COUNTER_BUTTON_X, UI.COUNTER_BUTTON_Y)
+    counterButton:SetText(self.L.COUNTER_CLOCKWISE)
 
     local outputLabel = options:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    outputLabel:SetPoint("TOPLEFT", clockwiseButton, "BOTTOMLEFT", 0, -15)
-    outputLabel:SetText("Output")
+    outputLabel:SetPoint("TOPLEFT", clockwiseButton, "BOTTOMLEFT", UI.OUTPUT_LABEL_X, UI.OUTPUT_LABEL_Y)
+    outputLabel:SetText(self.L.OUTPUT)
 
     local markersButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    markersButton:SetSize(85, 22)
-    markersButton:SetPoint("TOPLEFT", outputLabel, "BOTTOMLEFT", 0, -6)
-    markersButton:SetText("Markers")
+    markersButton:SetSize(UI.MARKERS_BUTTON_WIDTH, UI.MARKERS_BUTTON_HEIGHT)
+    markersButton:SetPoint("TOPLEFT", outputLabel, "BOTTOMLEFT", UI.MARKERS_BUTTON_X, UI.MARKERS_BUTTON_Y)
+    markersButton:SetText(self.L.MARKERS)
 
     local charsButton = CreateFrame("Button", nil, options, "GameMenuButtonTemplate")
-    charsButton:SetSize(85, 22)
-    charsButton:SetPoint("LEFT", markersButton, "RIGHT", 6, 0)
-    charsButton:SetText("Characters")
+    charsButton:SetSize(UI.CHARACTERS_BUTTON_WIDTH, UI.CHARACTERS_BUTTON_HEIGHT)
+    charsButton:SetPoint("LEFT", markersButton, "RIGHT", UI.CHARACTERS_BUTTON_X, UI.CHARACTERS_BUTTON_Y)
+    charsButton:SetText(self.L.CHARACTERS)
 
     local function RefreshOptions()
-        SetButtonSelected(clockwiseButton, self.reverseOrder == true)
-        SetButtonSelected(counterButton, self.reverseOrder ~= true)
-        SetButtonSelected(markersButton, self.outputMode == "markers")
-        SetButtonSelected(charsButton, self.outputMode ~= "markers")
+        SetButtonSelected(self, clockwiseButton, self.reverseOrder == true)
+        SetButtonSelected(self, counterButton, self.reverseOrder ~= true)
+        SetButtonSelected(self, markersButton, self.outputMode == "markers")
+        SetButtonSelected(self, charsButton, self.outputMode ~= "markers")
     end
 
     clockwiseButton:SetScript("OnClick", function()

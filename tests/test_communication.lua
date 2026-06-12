@@ -21,9 +21,12 @@ _G.FUA = {}
 local addonName = "FUA"
 local FUA = _G.FUA
 
-loadAddonFile("FUA/Data.lua", addonName, FUA)
-loadAddonFile("FUA/Order.lua", addonName, FUA)
-loadAddonFile("FUA/Communication.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Colors.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Locales/enUS.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Locale.lua", addonName, FUA)
+loadAddonFile("FUA/Modules/Encounters/MFQ/MF/Data.lua", addonName, FUA)
+loadAddonFile("FUA/Modules/Encounters/MFQ/MF/Order.lua", addonName, FUA)
+loadAddonFile("FUA/Services/Communication.lua", addonName, FUA)
 
 FUA.UpdateDisplay = function() end
 

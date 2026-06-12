@@ -42,8 +42,11 @@ function CreateFrame()
     }
 end
 
-loadAddonFile("FUA/Data.lua", addonName, FUA)
-loadAddonFile("FUA/Encounter.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Colors.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Locales/enUS.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Locale.lua", addonName, FUA)
+loadAddonFile("FUA/Modules/Encounters/MFQ/MF/Data.lua", addonName, FUA)
+loadAddonFile("FUA/Modules/Encounters/MFQ/MF/Encounter.lua", addonName, FUA)
 
 FUA.UpdateDisplay = function() end
 FUA.ClearOrder = function() end

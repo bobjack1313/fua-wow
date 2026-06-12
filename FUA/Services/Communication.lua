@@ -157,6 +157,6 @@ function FUA:ImportAssignment(symbols, priority)
     self.currentImportPriority = priority
     self:UpdateDisplay()
 
-    print("|cff00ff88FUA:|r Assignment imported from chat.")
-
+    self:PrintSuccess(self.L.MSG_IMPORTED)
 end
+

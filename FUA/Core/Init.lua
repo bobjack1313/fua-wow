@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 -- FUA - Midnight Falls Assignment Helper
--- File: Init.lua
+-- File: Core/Init.lua
 --
 -- Addon startup and initialization.
 --

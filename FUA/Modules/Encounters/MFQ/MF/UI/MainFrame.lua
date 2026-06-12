@@ -1,11 +1,13 @@
 -----------------------------------------------------------------------
 -- FUA - Midnight Falls Assignment Helper
--- File: UI/MainFrame.lua
+-- File: Modules/Encounters/MFQ/MF/UI/MainFrame.lua
 --
--- Main addon window shell.
+-- Main addon window shell for Midnight Falls module.
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...
+
+local UI = FUA.MF.UI
 
 function FUA:CreateUI()
     self:CreateMainFrame()
@@ -30,7 +32,7 @@ function FUA:CreateMainFrame()
     local frame = CreateFrame("Frame", "FUAFrame", UIParent, "BackdropTemplate")
     self.frame = frame
 
-    frame:SetSize(360, 280)
+    frame:SetSize(UI.FRAME_WIDTH, UI.FRAME_HEIGHT)
 
     if FUADB.position then
         frame:SetPoint(
@@ -74,35 +76,62 @@ function FUA:CreateMainFrame()
     frame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize = 16,
-        insets = { left = 4, right = 4, top = 4, bottom = 4 },
+        edgeSize = UI.BACKDROP_EDGE,
+        insets = {
+            left = UI.BACKDROP_INSET,
+            right = UI.BACKDROP_INSET,
+            top = UI.BACKDROP_INSET,
+            bottom = UI.BACKDROP_INSET
+        },
     })
 
-    frame:SetBackdropColor(0.02, 0.02, 0.03, 0.70)
-    frame:SetBackdropBorderColor(0.35, 0.35, 0.45, 0.85)
+    frame:SetBackdropColor(unpack(self.Colors.FRAME_BACKGROUND))
+    frame:SetBackdropBorderColor(unpack(self.Colors.FRAME_BORDER))
 
     frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", 12, -8)
-    frame.title:SetText("FUA | Midnight Falls")
+    frame.title:SetPoint("TOPLEFT", frame, "TOPLEFT", UI.FRAME_TITLE_X , UI.FRAME_TITLE_Y)
+    frame.title:SetText(self.L.MF_TITLE)
 
     local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-    closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 2, 2)
+    closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", UI.CLOSE_BUTTON_X, UI.CLOSE_BUTTON_Y)
     closeButton:SetScript("OnClick", function()
         frame:Hide()
     end)
 
     local difficultyText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    difficultyText:SetPoint("RIGHT", closeButton, "LEFT", -6, -4)
+    difficultyText:SetPoint("RIGHT", closeButton, "LEFT", UI.DIFFICULTY_TEXT_X, UI.DIFFICULTY_TEXT_Y)
     difficultyText:SetJustifyH("RIGHT")
     self.difficultyText = difficultyText
 
-    local optionsButton = CreateFrame("Button", nil, frame, "GameMenuButtonTemplate")
-    optionsButton:SetSize(32, 22)
-    optionsButton:SetPoint("TOPRIGHT", closeButton, "BOTTOMRIGHT", -6, -2)
-    optionsButton:SetText("Opt")
+    local optionsButton = CreateFrame("Button", nil, frame)
+    optionsButton:SetSize(UI.OPTIONS_BUTTON_WIDTH, UI.OPTIONS_BUTTON_HEIGHT)
+    optionsButton:SetPoint(
+        "TOPRIGHT",
+        closeButton,
+        "BOTTOMRIGHT",
+        UI.OPTIONS_BUTTON_X,
+        UI.OPTIONS_BUTTON_Y
+    )
+
+    local optionsIcon = optionsButton:CreateTexture(nil, "ARTWORK")
+    optionsIcon:SetSize(UI.OPTIONS_BUTTON_ICON_SIZE, UI.OPTIONS_BUTTON_ICON_SIZE)
+    optionsIcon:SetPoint("CENTER")
+    optionsIcon:SetTexture("Interface\\AddOns\\FUA\\Textures\\Core\\gold_gear_icon.png")
+
+    optionsButton.icon = optionsIcon
+
+    optionsButton:SetScript("OnEnter", function()
+        optionsIcon:SetVertexColor(unpack(self.Colors.OPTIONS_BUTTON_VERT))
+    end)
+
+    optionsButton:SetScript("OnLeave", function()
+        optionsIcon:SetVertexColor(unpack(self.Colors.OPTIONS_BUTTON_VERT_LEAVE))
+    end)
+
     optionsButton:SetScript("OnClick", function()
         self:ToggleOptionsWindow()
     end)
+
     self.optionsButton = optionsButton
 end
 
@@ -112,7 +141,7 @@ function FUA:ApplyCollapsedState()
     end
 
     if self.collapseButton then
-        self.collapseButton:SetText(self.collapsed and "Expand" or "Collapse")
+        self.collapseButton:SetText(self.collapsed and self.L.EXPAND or self.L.COLLAPSE)
     end
 
     if self.compactClearButton then
@@ -124,23 +153,23 @@ function FUA:ApplyCollapsedState()
     end
 
     if self.collapsed then
-        self.frame:SetSize(360, 200)
+        self.frame:SetSize(UI.FRAME_WIDTH, UI.FRAME_COLLAPSED_HEIGHT)
     else
-        self.frame:SetSize(360, 280)
+        self.frame:SetSize(UI.FRAME_WIDTH, UI.FRAME_HEIGHT)
     end
 
     if self.divider then
         self.divider:ClearAllPoints()
-        self.divider:SetPoint("LEFT", self.frame, "LEFT", 10, 0)
-        self.divider:SetPoint("RIGHT", self.frame, "RIGHT", -10, 0)
+        self.divider:SetPoint("LEFT", self.frame, "LEFT", UI.DIVIDER_MARGIN_X, UI.DIVIDER_COLLAPSED_Y)
+        self.divider:SetPoint("RIGHT", self.frame, "RIGHT", -UI.DIVIDER_MARGIN_X, UI.DIVIDER_COLLAPSED_Y)
 
         if self.collapsed then
-            self.divider:SetPoint("BOTTOM", self.frame, "BOTTOM", 10, 0)
+            self.divider:SetPoint("BOTTOM", self.frame, "BOTTOM", UI.DIVIDER_MARGIN_X, UI.DIVIDER_COLLAPSED_Y)
         else
-            self.divider:SetPoint("BOTTOM", self.frame, "BOTTOM", 10, 80)
+            self.divider:SetPoint("BOTTOM", self.frame, "BOTTOM", UI.DIVIDER_MARGIN_X, UI.DIVIDER_EXPANDED_Y)
         end
 
-        self.divider:SetHeight(1)
+        self.divider:SetHeight(UI.DIVIDER_HEIGHT)
     end
 
     if self.divider then
@@ -153,11 +182,11 @@ function FUA:CreateDivider()
 
     local divider = self.frame:CreateTexture(nil, "BORDER")
 
-    divider:SetColorTexture(0.55, 0.55, 0.65, 0.35)
-    divider:SetPoint("LEFT", self.frame, "LEFT", 10, 0)
-    divider:SetPoint("RIGHT", self.frame, "RIGHT", -10, 0)
-    divider:SetPoint("BOTTOM", self.frame, "BOTTOM", 10, 80)
-    divider:SetHeight(1)
+    divider:SetColorTexture(unpack(self.Colors.DIVIDER))
+    divider:SetPoint("LEFT", self.frame, "LEFT", UI.DIVIDER_MARGIN_X, UI.DIVIDER_COLLAPSED_Y)
+    divider:SetPoint("RIGHT", self.frame, "RIGHT", -UI.DIVIDER_MARGIN_X, UI.DIVIDER_COLLAPSED_Y)
+    divider:SetPoint("BOTTOM", self.frame, "BOTTOM", UI.DIVIDER_MARGIN_X, UI.DIVIDER_EXPANDED_Y)
+    divider:SetHeight(UI.DIVIDER_HEIGHT)
 
     self.divider = divider
 end
@@ -168,4 +197,3 @@ function FUA:ToggleCollapsed()
 
     self:ApplyCollapsedState()
 end
-

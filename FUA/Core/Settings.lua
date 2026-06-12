@@ -1,0 +1,48 @@
+-----------------------------------------------------------------------
+-- FUA
+-- File: Core/Settings.lua
+--
+-- Centralized settings management.
+--
+-- Responsible for:
+--   * Global addon settings
+--   * SavedVariables defaults
+--   * Settings migration between versions
+--   * Settings validation
+--   * Shared settings access helpers
+--
+-- Intended Scope:
+--   Settings stored here should apply to the FUA platform as a whole,
+--   not to a specific module.
+--
+-- Examples:
+--   * Minimap button visibility
+--   * Preferred language override
+--   * Theme selection
+--   * Global UI scale
+--   * Module enable/disable state
+--   * Shared communication preferences
+--
+-- Module-Specific Settings:
+--   Individual modules should maintain ownership of their own
+--   configuration values whenever possible.
+--
+-- Examples:
+--   * Midnight Falls output mode
+--   * Midnight Falls strategy direction
+--   * Watcher tracking preferences
+--
+-- Future Considerations:
+--   * Default settings registration
+--   * Automatic SavedVariables migration
+--   * Import/export of settings profiles
+--   * Per-character vs account-wide settings
+--   * Shared settings UI integration
+--
+-- Notes:
+--   This file currently serves as the planned home for the platform
+--   settings system and is intentionally minimal until a shared
+--   settings framework becomes necessary.
+-----------------------------------------------------------------------
+
+local addonName, FUA = ...

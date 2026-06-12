@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 -- FUA - Midnight Falls Assignment Helper
--- File: Encounter.lua
+-- File: Modules/Encounters/MFQ/MF/Encounter.lua
 --
 -- Encounter and difficulty management.
 --
@@ -28,29 +28,35 @@ function FUA:UpdateDifficulty()
     local _, _, difficultyID = GetInstanceInfo()
     difficultyID = FUA_DEBUG_DIFFICULTY or difficultyID
 
-    local difficultyName = "Unknown"
+    local difficultyName = self.L.DIFFICULTY_UNKNOWN
 
     if difficultyID == 17 then
         self.symbolCount = 3
-        difficultyName = "LFR"
+        difficultyName = self.L.DIFFICULTY_LFR
+
     elseif difficultyID == 14 then
         self.symbolCount = 3
-        difficultyName = "Normal"
+        difficultyName = self.L.DIFFICULTY_NORMAL
+
     elseif difficultyID == 15 then
         self.symbolCount = 5
-        difficultyName = "Heroic"
+        difficultyName = self.L.DIFFICULTY_HEROIC
+
     elseif difficultyID == 16 then
         self.symbolCount = 5
-        difficultyName = "Mythic"
+        difficultyName = self.L.DIFFICULTY_MYTHIC
+
     else
         self.symbolCount = 3
-        difficultyName = "Outside Raid"
+        difficultyName = self.L.DIFFICULTY_OUTSIDE_RAID
     end
 
     self.difficultyName = difficultyName
 
     if self.difficultyText then
-        self.difficultyText:SetText("Difficulty: " .. difficultyName)
+        self.difficultyText:SetText(
+            self.L.DIFFICULTY_LABEL .. ": " .. difficultyName
+        )
     end
 end
 
@@ -113,8 +119,6 @@ end
 function FUA:ShowInstanceReminder()
     local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfo()
 
-    -- print("FUA reminder debug:", name, instanceType, difficultyID, instanceID)
-
     if instanceType ~= "raid" then
         return
     end
@@ -129,5 +133,5 @@ function FUA:ShowInstanceReminder()
 
     self.reminderShown = true
 
-    print("|cff00ff88FUA:|r Midnight Falls helper ready. Use |cffffff00/fua|r to prepare rune callouts.")
+    self:PrintSuccess(self.L.MSG_READY)
 end

@@ -1,11 +1,13 @@
 -----------------------------------------------------------------------
 -- FUA - Midnight Falls Assignment Helper
--- File: UI/Controls.lua
+-- File: Modules/Encounters/MFQ/MF/UI/Controls.lua
 --
 -- Input buttons, action buttons, and display helpers.
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...
+
+local UI = FUA.MF.UI
 
 function FUA:CreateControls()
     local frame = self.frame
@@ -15,23 +17,23 @@ function FUA:CreateControls()
     -----------------------------------------------------------------------
 
     local compactControlsFrame = CreateFrame("Frame", nil, frame)
-    compactControlsFrame:SetSize(340, 24)
-    compactControlsFrame:SetPoint("BOTTOM", self.divider, "TOP", 0, 4)
+    compactControlsFrame:SetSize(UI.COMP_CONTROLS_FRAME_WIDTH, UI.COMP_CONTROLS_FRAME_HEIGHT)
+    compactControlsFrame:SetPoint("BOTTOM", self.divider, "TOP", UI.COMP_CONTROLS_FRAME_X, UI.COMP_CONTROLS_FRAME_Y)
     self.compactControlsFrame = compactControlsFrame
 
     local collapseButton = CreateFrame("Button", nil, compactControlsFrame, "GameMenuButtonTemplate")
-    collapseButton:SetSize(70, 22)
-    collapseButton:SetPoint("LEFT", compactControlsFrame, "LEFT", 0, 0)
-    collapseButton:SetText(self.collapsed and "Expand" or "Collapse")
+    collapseButton:SetSize(UI.COLLAPSE_BUTTON_WIDTH, UI.COLLAPSE_BUTTON_HEIGHT)
+    collapseButton:SetPoint("LEFT", compactControlsFrame, "LEFT", UI.COLLAPSE_BUTTON_X, UI.COLLAPSE_BUTTON_Y)
+    collapseButton:SetText(self.collapsed and self.L.EXPAND or self.L.COLLAPSE)
     collapseButton:SetScript("OnClick", function()
         self:ToggleCollapsed()
     end)
     self.collapseButton = collapseButton
 
     local compactClearButton = CreateFrame("Button", nil, compactControlsFrame, "GameMenuButtonTemplate")
-    compactClearButton:SetSize(60, 22)
-    compactClearButton:SetPoint("RIGHT", compactControlsFrame, "RIGHT", 0, 0)
-    compactClearButton:SetText("Clear")
+    compactClearButton:SetSize(UI.COMP_CLEAR_BUTTON_WIDTH, UI.COMP_CLEAR_BUTTON_HEIGHT)
+    compactClearButton:SetPoint("RIGHT", compactControlsFrame, "RIGHT", UI.COMP_CLEAR_BUTTON_X, UI.COMP_CLEAR_BUTTON_Y)
+    compactClearButton:SetText(self.L.CLEAR)
     compactClearButton:SetScript("OnClick", function()
         self:ClearOrder()
     end)
@@ -42,64 +44,72 @@ function FUA:CreateControls()
     -----------------------------------------------------------------------
 
     local fullControlsFrame = CreateFrame("Frame", nil, frame)
-    fullControlsFrame:SetSize(340, 70)
-    fullControlsFrame:SetPoint("TOP", self.divider, "BOTTOM", 0, -6)
+    fullControlsFrame:SetSize(UI.CONTROLS_FRAME_WIDTH, UI.CONTROLS_FRAME_HEIGHT)
+    fullControlsFrame:SetPoint("TOP", self.divider, "BOTTOM", UI.CONTROLS_FRAME_X, UI.CONTROLS_FRAME_Y)
     self.fullControlsFrame = fullControlsFrame
 
     -----------------------------------------------------------------------
     -- Compact Order Preview
     -----------------------------------------------------------------------
     local displayBox = CreateFrame("Frame", nil, fullControlsFrame, "BackdropTemplate")
-    displayBox:SetSize(180, 25)
-    displayBox:SetPoint("TOPLEFT", fullControlsFrame, "TOPLEFT", 0, 0)
-    -- displayBox:SetPoint("TOPLEFT", self.divider, "BOTTOMLEFT", -20, -6)
+    displayBox:SetSize(UI.DISPLAY_BOX_WIDTH, UI.DISPLAY_BOX_HEIGHT)
+    displayBox:SetPoint("TOPLEFT", fullControlsFrame, "TOPLEFT", UI.DISPLAY_BOX_X, UI.DISPLAY_BOX_Y)
+
     displayBox:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize = 10,
-        insets = { left = 3, right = 3, top = 3, bottom = 3 },
+        edgeSize = UI.DISPLAY_BOX_BD_EDGE,
+        insets = {
+            left = UI.DISPLAY_BOX_BD_INSET,
+            right = UI.DISPLAY_BOX_BD_INSET,
+            top = UI.DISPLAY_BOX_BD_INSET,
+            bottom = UI.DISPLAY_BOX_BD_INSET
+        },
     })
-    displayBox:SetBackdropColor(0, 0, 0, 0.38)
-    displayBox:SetBackdropBorderColor(0.5, 0.5, 0.6, 0.38)
+    displayBox:SetBackdropColor(unpack(self.Colors.DISPLAY_BACKGROUND))
+    displayBox:SetBackdropBorderColor(unpack(self.Colors.DISPLAY_BORDER))
     self.displayBox = displayBox
 
     local displayText = displayBox:CreateFontString(nil, "OVERLAY")
-    displayText:SetPoint("CENTER", displayBox, "CENTER", 0, 0)
-    displayText:SetFont("Fonts\\FRIZQT__.TTF", 8, "OUTLINE")
-    displayText:SetTextColor(1, 0.82, 0)
+    displayText:SetPoint("CENTER", displayBox, "CENTER", UI.DISPLAY_TEXT_X, UI.DISPLAY_TEXT_Y)
+    displayText:SetFont("Fonts\\FRIZQT__.TTF", UI.CONTROLS_FONT_SIZE_MARK, "OUTLINE")
+    displayText:SetTextColor(unpack(self.Colors.DISPLAY_TEXT))
     self.displayText = displayText
 
     -----------------------------------------------------------------------
     -- Symbol Selection Buttons
     -----------------------------------------------------------------------
 
-    local runeSize = 32
-    local runeGap = 5
     local previousButton
 
     for i, symbol in ipairs(self.symbols) do
         local button = CreateFrame("Button", nil, fullControlsFrame, "BackdropTemplate")
-        button:SetSize(runeSize, runeSize)
+        button:SetSize(UI.RUNE_SIZE, UI.RUNE_SIZE)
 
         if i == 1 then
-            button:SetPoint("TOPLEFT", displayBox, "BOTTOMLEFT", 0, -4)
+            button:SetPoint("TOPLEFT", displayBox, "BOTTOMLEFT", UI.RUNE_BUTTON_X, UI.RUNE_BUTTON_Y_1)
         else
-            button:SetPoint("LEFT", previousButton, "RIGHT", runeGap, 0)
+            button:SetPoint("LEFT", previousButton, "RIGHT", UI.RUNE_GAP, UI.RUNE_BUTTON_Y)
         end
 
         button:SetBackdrop({
             bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
             edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-            edgeSize = 10,
-            insets = { left = 3, right = 3, top = 3, bottom = 3 },
+            edgeSize = UI.RUNE_BUTTON_BD_EDGE,
+            insets = {
+                left = UI.RUNE_BUTTON_BD_INSET,
+                right = UI.RUNE_BUTTON_BD_INSET,
+                top = UI.RUNE_BUTTON_BD_INSET,
+                bottom = UI.RUNE_BUTTON_BD_INSET
+            },
         })
 
-        button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.75)
-        button:SetBackdropBorderColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.55)
+        button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], UI.RUNE_BD_ALPHA)
+        button:SetBackdropBorderColor(symbol.color[1], symbol.color[2], symbol.color[3], UI.RUNE_BD_BORDER_ALPHA)
 
         local icon = button:CreateTexture(nil, "ARTWORK")
-        icon:SetPoint("TOPLEFT", button, "TOPLEFT", 5, -5)
-        icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -5, 5)
+        icon:SetPoint("TOPLEFT", button, "TOPLEFT", UI.RUNE_ICON_TOP_X, UI.RUNE_ICON_TOP_Y)
+        icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", UI.RUNE_ICON_BOTTOM_X, UI.RUNE_ICON_BOTTOM_Y)
         icon:SetTexture(symbol.texture)
         button.icon = icon
 
@@ -108,13 +118,15 @@ function FUA:CreateControls()
         end)
 
         button:SetScript("OnEnter", function()
-            button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.88)
-            button:SetBackdropBorderColor(1, 1, 1, 0.95)
+            button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], UI.RUNE_ICON_BD1_ALPHA)
+            button:SetBackdropBorderColor(
+                unpack(self.Colors.BUTTON_SELECTED_BORDER)
+            )
         end)
 
         button:SetScript("OnLeave", function()
-            button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.55)
-            button:SetBackdropBorderColor(symbol.color[1], symbol.color[2], symbol.color[3], 0.45)
+            button:SetBackdropColor(symbol.color[1], symbol.color[2], symbol.color[3], UI.RUNE_ICON_BD2_ALPHA)
+            button:SetBackdropBorderColor(symbol.color[1], symbol.color[2], symbol.color[3], UI.RUNE_ICON_BD_BORDER_ALPHA)
         end)
 
         self.symbolButtons = self.symbolButtons or {}
@@ -128,26 +140,25 @@ function FUA:CreateControls()
     -----------------------------------------------------------------------
 
     local undoButton = CreateFrame("Button", nil, fullControlsFrame, "GameMenuButtonTemplate")
-    undoButton:SetSize(70, 26)
-    undoButton:SetPoint("TOPRIGHT", fullControlsFrame, "TOPRIGHT", -76, 0)
-    -- undoButton:SetPoint("BOTTOMLEFT", self.divider, "BOTTOMLEFT", 180, -34)
-    undoButton:SetText("Undo")
+    undoButton:SetSize(UI.UNDO_BUTTON_WIDTH, UI.UNDO_BUTTON_HEIGHT)
+    undoButton:SetPoint("TOPRIGHT", fullControlsFrame, "TOPRIGHT", UI.UNDO_BUTTON_X, UI.UNDO_BUTTON_Y)
+    undoButton:SetText(self.L.UNDO)
     undoButton:SetScript("OnClick", function()
         self:UndoLast()
     end)
 
     local clearButton = CreateFrame("Button", nil, fullControlsFrame, "GameMenuButtonTemplate")
-    clearButton:SetSize(70, 26)
-    clearButton:SetPoint("LEFT", undoButton, "RIGHT", 6, 0)
-    clearButton:SetText("Clear")
+    clearButton:SetSize(UI.CLEAR_BUTTON_WIDTH, UI.CLEAR_BUTTON_HEIGHT)
+    clearButton:SetPoint("LEFT", undoButton, "RIGHT", UI.CLEAR_BUTTON_X, UI.CLEAR_BUTTON_Y)
+    clearButton:SetText(self.L.CLEAR)
     clearButton:SetScript("OnClick", function()
         self:ClearOrder()
     end)
 
     local chatButton = CreateFrame("Button", nil, fullControlsFrame, "GameMenuButtonTemplate")
-    chatButton:SetSize(146, 30)
-    chatButton:SetPoint("TOPLEFT", undoButton, "BOTTOMLEFT", 0, -4)
-    chatButton:SetText("Prepare Message")
+    chatButton:SetSize(UI.CHAT_BUTTON_WIDTH, UI.CHAT_BUTTON_HEIGHT)
+    chatButton:SetPoint("TOPLEFT", undoButton, "BOTTOMLEFT", UI.CHAT_BUTTON_X, UI.CHAT_BUTTON_Y)
+    chatButton:SetText(self.L.PREPARE_MESSAGE)
     chatButton:SetScript("OnClick", function()
         self:OpenRaidChat()
     end)
@@ -176,8 +187,8 @@ function FUA:UpdateDisplayFont()
     end
 
     if self.outputMode == "markers" then
-        self.displayText:SetFont("Fonts\\FRIZQT__.TTF", 8, "OUTLINE")
+        self.displayText:SetFont("Fonts\\FRIZQT__.TTF", UI.CONTROLS_FONT_SIZE_MARK, "OUTLINE")
     else
-        self.displayText:SetFont("Fonts\\FRIZQT__.TTF", 12, "OUTLINE")
+        self.displayText:SetFont("Fonts\\FRIZQT__.TTF", UI.CONTROLS_FONT_SIZE_CHAR, "OUTLINE")
     end
 end

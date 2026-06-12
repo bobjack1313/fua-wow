@@ -23,7 +23,7 @@ SlashCmdList = {}
 local addonName = "FUA"
 local FUA = _G.FUA
 
-loadAddonFile("FUA/Commands.lua", addonName, FUA)
+loadAddonFile("FUA/Core/Commands.lua", addonName, FUA)
 
 local frameShown = false
 local clearCalled = false

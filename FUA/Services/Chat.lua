@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
--- FUA - Midnight Falls Assignment Helper
--- File: Chat.lua
+-- FUA
+-- File: Services/Chat.lua
 --
 -- Chat message generation and channel selection.
 --
@@ -39,7 +39,7 @@ function FUA:OpenRaidChat()
     local text = self:GetPreparedMessageOrderString()
 
     if text == "" then
-        print("|cffff5555FUA:|r No order built yet.")
+        self:PrintError(self.L.ERR_NO_ORDER)
         return
     end
 

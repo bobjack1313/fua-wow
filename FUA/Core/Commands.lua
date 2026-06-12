@@ -15,6 +15,8 @@
 --   /fua show
 --   /fua hide
 --   /fua clear
+--   /fua help
+--   /fua version
 --
 -- Test Commands:
 --   /fua importtest
@@ -32,7 +34,6 @@ function FUA:RegisterCommands()
     SLASH_FUA1 = "/fua"
 
     SlashCmdList["FUA"] = function(msg)
-
         msg = string.lower(msg or "")
 
         if msg == "show" then
@@ -45,15 +46,15 @@ function FUA:RegisterCommands()
             self:ClearOrder()
 
         elseif msg == "help" then
-            print("|cff00ff88FUA Help|r")
-            print("/fua - Toggle the window")
-            print("/fua show - Show the window")
-            print("/fua hide - Hide the window")
-            print("/fua clear - Clear the current order")
-            print("Build the rune order, review the diagram, then click Prepare Message. Next, manually send to raid to pass along rune configuration.")
+            print(self:ColorText(self.Colors.SUCCESS, self.L.HELP_TITLE))
+            print(self.L.HELP_TOGGLE)
+            print(self.L.HELP_SHOW)
+            print(self.L.HELP_HIDE)
+            print(self.L.HELP_CLEAR)
+            print(self.L.HELP_USAGE)
 
         elseif msg == "version" then
-            print("|cff00ff88FUA:|r Version 0.3.0")
+            print(self:GetPrefix() .. " " .. self.L.VERSION_LABEL .. " " .. self.VERSION)
 
         elseif msg == "importtest" then
             self.isEncounterActive = true
@@ -81,7 +82,7 @@ function FUA:RegisterCommands()
 
     SLASH_FUADEBUG1 = "/fuadebug"
 
-        SlashCmdList["FUADEBUG"] = function()
+    SlashCmdList["FUADEBUG"] = function()
         local name, instanceType, difficultyID, difficultyName,
               maxPlayers, dynamicDifficulty, isDynamic,
               instanceID = GetInstanceInfo()
@@ -91,6 +92,5 @@ function FUA:RegisterCommands()
         print("Difficulty:", difficultyID)
         print("InstanceID:", instanceID)
     end
-
 end
 

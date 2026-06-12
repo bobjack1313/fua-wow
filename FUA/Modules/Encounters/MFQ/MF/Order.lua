@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 -- FUA - Midnight Falls Assignment Helper
--- File: Order.lua
+-- File: Modules/Encounters/MFQ/MF/Order.lua
 --
 -- Responsible for:
 --   * Rune order storage
@@ -126,12 +126,12 @@ function FUA:AddSymbol(symbol)
     self:UpdateDifficulty()
 
     if self:HasSymbol(symbol) then
-        print("|cffff5555FUA:|r Symbol already selected.")
+        self:PrintError(self.L.ERR_SYMBOL_EXISTS)
         return
     end
 
     if #self.order >= self.symbolCount then
-        print("|cffff5555FUA:|r Symbol limit reached.")
+        self:PrintError(self.L.ERR_SYMBOL_LIMIT)
         return
     end
 
@@ -148,4 +148,3 @@ function FUA:UndoLast()
     table.remove(self.order)
     self:UpdateDisplay()
 end
-

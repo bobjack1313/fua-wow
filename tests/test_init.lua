@@ -86,7 +86,7 @@ local function resetState()
 end
 
 local function loadInit()
-    loadAddonFile("FUA/Init.lua", addonName, FUA)
+    loadAddonFile("FUA/Core/Init.lua", addonName, FUA)
 end
 
 local function fireAddonLoaded(name)

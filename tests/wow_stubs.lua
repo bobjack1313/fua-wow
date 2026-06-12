@@ -45,3 +45,7 @@ end
 function UnitName()
     return "Player"
 end
+
+function GetLocale()
+    return "enUS"
+end
