@@ -1,4 +1,4 @@
-# FUA Version 0.4.0 - 2026-06-11
+# FUA Version 0.4.0 - 2026-06-10
 
 ## Added
 
@@ -43,7 +43,7 @@
 
 ---
 
-# Version 0.3.0
+# Version 0.3.0 - 2026-06-9
 
 ## New Features
 
@@ -167,7 +167,7 @@ Expanded runtime state management for encounter tracking, import handling, and U
 
 ---
 
-# FUA 0.2.0
+# FUA 0.2.0 - 2026-06-8
 
 Major visual update for the Midnight Falls encounter helper.
 
