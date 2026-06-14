@@ -21,6 +21,7 @@ _G.FUA = {}
 local addonName = "FUA"
 local FUA = _G.FUA
 
+loadAddonFile("FUA/Core/FUA.lua", addonName, FUA)
 loadAddonFile("FUA/Core/Colors.lua", addonName, FUA)
 loadAddonFile("FUA/Core/Locales/enUS.lua", addonName, FUA)
 loadAddonFile("FUA/Core/Locale.lua", addonName, FUA)
@@ -69,6 +70,14 @@ test("Symbols have expected marker mappings", function()
     assertEqual(FUA.symbols[3].marker, "{rt3}")
     assertEqual(FUA.symbols[4].marker, "T")
     assertEqual(FUA.symbols[5].marker, "{rt2}")
+end)
+
+test("Release build does not force encounter difficulty", function()
+    assertTrue(FUA_DEBUG_DIFFICULTY == nil)
+end)
+
+test("DEBUG_COMMS disabled", function()
+    assertEqual(FUA.DEBUG_COMMS, false)
 end)
 
 -----------------------------------------------------------------------

@@ -18,12 +18,6 @@ local addonName, FUA = ...
 -- Runtime State
 -----------------------------------------------------------------------
 
-FUA.importSourcePriority = {
-    CHAT_MSG_INSTANCE_CHAT = 1,
-    CHAT_MSG_RAID = 2,
-    CHAT_MSG_RAID_WARNING = 3,
-}
-
 FUA.currentImportPriority = 0
 
 -----------------------------------------------------------------------
@@ -31,19 +25,14 @@ FUA.currentImportPriority = 0
 -----------------------------------------------------------------------
 
 local commFrame = CreateFrame("Frame")
-
 commFrame:RegisterEvent("CHAT_MSG_ADDON")
-commFrame:RegisterEvent("CHAT_MSG_RAID")
-commFrame:RegisterEvent("CHAT_MSG_RAID_WARNING")
-commFrame:RegisterEvent("CHAT_MSG_INSTANCE_CHAT")
 
 commFrame:SetScript("OnEvent", function(_, event, ...)
-    if event == "CHAT_MSG_ADDON" then
-        FUA:HandleAddonMessage(...)
+    if event ~= "CHAT_MSG_ADDON" then
         return
     end
 
-    FUA:HandleChatAssignment(event, ...)
+    FUA:HandleAddonMessage(...)
 end)
 
 -----------------------------------------------------------------------
@@ -54,32 +43,29 @@ function FUA:HandleAddonMessage(prefix, message, channel, sender)
     if prefix ~= "FUA" then
         return
     end
-end
 
------------------------------------------------------------------------
--- Chat Message Handling
------------------------------------------------------------------------
-
-function FUA:HandleChatAssignment(event, message, sender)
-    if not self.isEncounterActive then
+    if not self.DEBUG_COMMS and not self.isEncounterActive then
         return
     end
 
-    if sender and UnitName and sender == UnitName("player") then
-        return
+    if self.DEBUG_COMMS then
+        self:PrintInfo(
+            "RX addon message from " ..
+            tostring(sender) ..
+            " via " ..
+            tostring(channel) ..
+            ": " ..
+            tostring(message)
+        )
     end
 
-    local priority = self.importSourcePriority[event]
-    if not priority then
-        return
-    end
-
-    local parsed = self:ParseChatAssignment(message)
+    local parsed = self:ParseChatAssignment("FUA: " .. tostring(message))
     if not parsed then
+        self:PrintError("Addon message parse failed.")
         return
     end
 
-    self:ImportAssignment(parsed, priority)
+    self:ImportAssignment(parsed, 100)
 end
 
 -----------------------------------------------------------------------
@@ -111,7 +97,6 @@ function FUA:ParseChatAssignment(message)
         return nil
     end
 
-    -- Only accept FUA-prefixed messages.
     if not string.match(message, "^FUA:%s*") then
         return nil
     end
@@ -144,6 +129,9 @@ function FUA:ImportAssignment(symbols, priority)
         return
     end
 
+    priority = priority or 0
+    self.currentImportPriority = self.currentImportPriority or 0
+
     if priority < self.currentImportPriority then
         return
     end
@@ -160,3 +148,56 @@ function FUA:ImportAssignment(symbols, priority)
     self:PrintSuccess(self.L.MSG_IMPORTED)
 end
 
+-----------------------------------------------------------------------
+-- Assignment Broadcast
+-----------------------------------------------------------------------
+
+function FUA:BroadcastAssignment()
+    local text = self:GetPreparedMessageOrderString()
+
+    if text == "" then
+        self:PrintError(self.L.ERR_NO_ORDER)
+        return
+    end
+
+    local channel
+    local target
+
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+        channel = "INSTANCE_CHAT"
+    elseif IsInRaid() then
+        channel = "RAID"
+    elseif IsInGroup() then
+        channel = "PARTY"
+    else
+        channel = "WHISPER"
+        target = UnitName("player")
+    end
+
+    if self.DEBUG_COMMS then
+        self:PrintInfo(
+            "TX addon message via " ..
+            channel ..
+            ": " ..
+            text
+        )
+    end
+
+    local result = C_ChatInfo.SendAddonMessage(
+        "FUA",
+        text,
+        channel,
+        target
+    )
+
+    if self.DEBUG_COMMS then
+        self:PrintInfo(
+            "SendAddonMessage result: " ..
+            tostring(result)
+        )
+    end
+
+    if result ~= 0 then
+        self:PrintError("Addon message send failed: " .. tostring(result))
+    end
+end

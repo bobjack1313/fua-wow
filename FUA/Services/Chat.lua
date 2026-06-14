@@ -38,10 +38,16 @@ end
 function FUA:OpenRaidChat()
     local text = self:GetPreparedMessageOrderString()
 
+    if type(self.DebugLog) == "function" then
+        self.DebugLog(self, "PREPARE", text)
+    end
+
     if text == "" then
         self:PrintError(self.L.ERR_NO_ORDER)
         return
     end
+
+    self:BroadcastAssignment()
 
     ChatFrame_OpenChat(self:GetChatPrefix() .. text)
 end

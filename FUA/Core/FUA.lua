@@ -11,10 +11,32 @@
 
 local addonName, FUA = ...
 
-_G.FUA = FUA -- temporary debug access
-
 -----------------------------------------------------------------------
 -- Runtime State
 -----------------------------------------------------------------------
 
 FUA.order = FUA.order or {}
+
+FUA.DEBUG_COMMS = false
+
+-----------------------------------------------------------------------
+-- Debug Logging
+-----------------------------------------------------------------------
+
+function FUA:DebugLog(event, data)
+    FUADB.debugLog = FUADB.debugLog or {}
+
+    table.insert(FUADB.debugLog, {
+        time = date("%H:%M:%S"),
+        event = event,
+        data = data,
+    })
+
+    while #FUADB.debugLog > 100 do
+        table.remove(FUADB.debugLog, 1)
+    end
+end
+
+function FUA:ClearDebugLog()
+    FUADB.debugLog = {}
+end

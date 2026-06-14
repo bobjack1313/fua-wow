@@ -88,6 +88,10 @@ function FUA:RegisterEncounterEvents()
 
         if event == "ENCOUNTER_START" then
             if encounterID == self.MIDNIGHT_FALLS_ENCOUNTER_ID then
+                if self.DebugLog then
+                    self:DebugLog("ENCOUNTER_START", tostring(encounterID))
+                end
+
                 self.isEncounterActive = true
                 self.currentImportPriority = 0
 
@@ -104,6 +108,10 @@ function FUA:RegisterEncounterEvents()
 
         if event == "ENCOUNTER_END" then
             if encounterID == self.MIDNIGHT_FALLS_ENCOUNTER_ID then
+                if self.DebugLog then
+                    self:DebugLog("ENCOUNTER_END", tostring(encounterID))
+                end
+
                 self.isEncounterActive = false
                 self.currentImportPriority = 0
             end

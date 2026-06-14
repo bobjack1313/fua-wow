@@ -1,4 +1,30 @@
-# FUA Version 0.4.0 and Version 0.4.1 - 2026-06-10
+# FUE Version 0.4.3 - 2026-06-14
+
+## Fixed
+
+- Replaced combat chat import system with addon message communication.
+- Removed raid, instance, say, and emote chat parsing to avoid combat taint errors.
+- Added addon message send/receive infrastructure for future assignment synchronization.
+- Improved communication debugging and diagnostics.
+- Updated communication tests and import handling.
+- Fixed several startup and import stability issues.
+
+# FUE Version 0.4.2 - 2026-06-11
+
+## Fixed
+
+* A bug where MSG_RDY was not set for all locales.
+
+
+# FUA Version 0.4.1 - 2026-06-11
+
+## Fixed
+
+* A debug setting was left on forcing the addon to always be in heroic.
+
+---
+
+# FUA Version 0.4.0 - 2026-06-10
 
 ## Added
 

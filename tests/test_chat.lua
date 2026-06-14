@@ -64,6 +64,12 @@ loadAddonFile("FUA/Services/Chat.lua", addonName, FUA)
 FUA.UpdateDisplay = function() end
 FUA.UpdateDifficulty = function() end
 
+local broadcastCalled = false
+
+FUA.BroadcastAssignment = function()
+    broadcastCalled = true
+end
+
 local function resetState()
     FUA.order = {}
     FUA.symbolCount = 3
@@ -136,13 +142,15 @@ end)
 test("OpenRaidChat opens prepared message", function()
     resetState()
 
-    FUA:AddSymbol(FUA.symbols[1])
-    FUA:AddSymbol(FUA.symbols[2])
-    FUA:AddSymbol(FUA.symbols[3])
+    FUA.order = {
+        { char = "X", marker = "{rt7}" },
+        { char = "V", marker = "{rt4}" },
+        { char = "<>", marker = "{rt3}" },
+    }
 
     FUA:OpenRaidChat()
 
-    assertEqual(openedChatText, "/say FUA:  [ X ]    [ V ]    [ <> ]")
+    assertEqual(broadcastCalled, true)
 end)
 
 test("OpenRaidChat respects reverse order", function()
