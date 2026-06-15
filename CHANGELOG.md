@@ -1,4 +1,15 @@
-# FUE Version 0.4.3 - 2026-06-14
+# FUA Version 0.4.4 - 2026-06-15
+
+- Fixed addon communication self-imports causing assignment order corruption.
+- Added safeguards to ignore a player's own addon messages.
+- Added protected combat restrictions for addon assignment imports.
+- Send Message now automatically broadcasts addon messages outside combat.
+- Prepare Message is automatically used during protected combat.
+- Added combat-aware button labeling.
+- Improved communication diagnostics and test coverage.
+- Added safeguards against debug settings being included in release builds.
+
+# FUA Version 0.4.3 - 2026-06-14
 
 ## Fixed
 
@@ -9,18 +20,18 @@
 - Updated communication tests and import handling.
 - Fixed several startup and import stability issues.
 
-# FUE Version 0.4.2 - 2026-06-11
+# FUA Version 0.4.2 - 2026-06-11
 
 ## Fixed
 
-* A bug where MSG_RDY was not set for all locales.
+- A bug where MSG_RDY was not set for all locales.
 
 
 # FUA Version 0.4.1 - 2026-06-11
 
 ## Fixed
 
-* A debug setting was left on forcing the addon to always be in heroic.
+- A debug setting was left on forcing the addon to always be in heroic.
 
 ---
 

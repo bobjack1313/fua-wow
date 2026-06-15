@@ -51,8 +51,8 @@ FUA.symbols = {
         color = FUA.Colors.TRIANGLE
     },
     {
-        label = "<>",
-        char = "<>",
+        label = "D",
+        char = "D",
         marker = "{rt3}",
         displayMarker = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:22:22|t",
         texture = "Interface\\AddOns\\FUA\\Textures\\Encounters\\MFQ\\MF\\diamond.png",

@@ -20,6 +20,14 @@ FUA.order = FUA.order or {}
 FUA.DEBUG_COMMS = false
 
 -----------------------------------------------------------------------
+-- Protected Combat Detection
+-----------------------------------------------------------------------
+
+function FUA:IsProtectedCombat()
+    return InCombatLockdown and InCombatLockdown()
+end
+
+-----------------------------------------------------------------------
 -- Debug Logging
 -----------------------------------------------------------------------
 
@@ -40,3 +48,4 @@ end
 function FUA:ClearDebugLog()
     FUADB.debugLog = {}
 end
+

@@ -84,7 +84,7 @@ test("AddSymbol respects symbolCount limit", function()
     assertEqual(#FUA.order, 3)
     assertEqual(FUA.order[1].char, "X")
     assertEqual(FUA.order[2].char, "V")
-    assertEqual(FUA.order[3].char, "<>")
+    assertEqual(FUA.order[3].char, "D")
 end)
 
 test("UndoLast removes most recent symbol", function()
@@ -126,7 +126,7 @@ test("GetDisplayOrderString returns input order in char mode", function()
     FUA:AddSymbol(V)
     FUA:AddSymbol(DIAMOND)
 
-    assertEqual(FUA:GetDisplayOrderString(), "[ X ]    [ V ]    [ <> ]")
+    assertEqual(FUA:GetDisplayOrderString(), "[ X ]    [ V ]    [ D ]")
 end)
 
 test("GetChatOrderString returns strategy order when not reversed", function()
@@ -138,7 +138,7 @@ test("GetChatOrderString returns strategy order when not reversed", function()
     FUA:AddSymbol(V)
     FUA:AddSymbol(DIAMOND)
 
-    assertEqual(FUA:GetChatOrderString(), "[ X ]    [ V ]    [ <> ]")
+    assertEqual(FUA:GetChatOrderString(), "[ X ]    [ V ]    [ D ]")
 end)
 
 test("GetChatOrderString returns reversed strategy order when reversed", function()
@@ -150,7 +150,7 @@ test("GetChatOrderString returns reversed strategy order when reversed", functio
     FUA:AddSymbol(V)
     FUA:AddSymbol(DIAMOND)
 
-    assertEqual(FUA:GetChatOrderString(), "[ <> ]    [ V ]    [ X ]")
+    assertEqual(FUA:GetChatOrderString(), "[ D ]    [ V ]    [ X ]")
 end)
 
 test("GetPreparedMessageOrderString returns input order when not reversed", function()
@@ -162,7 +162,7 @@ test("GetPreparedMessageOrderString returns input order when not reversed", func
     FUA:AddSymbol(V)
     FUA:AddSymbol(DIAMOND)
 
-    assertEqual(FUA:GetPreparedMessageOrderString(), "[ X ]    [ V ]    [ <> ]")
+    assertEqual(FUA:GetPreparedMessageOrderString(), "[ X ]    [ V ]    [ D ]")
 end)
 
 test("GetPreparedMessageOrderString returns reversed order when reversed", function()
@@ -174,7 +174,7 @@ test("GetPreparedMessageOrderString returns reversed order when reversed", funct
     FUA:AddSymbol(V)
     FUA:AddSymbol(DIAMOND)
 
-    assertEqual(FUA:GetPreparedMessageOrderString(), "[ <> ]    [ V ]    [ X ]")
+    assertEqual(FUA:GetPreparedMessageOrderString(), "[ D ]    [ V ]    [ X ]")
 end)
 
 test("GetStrategyOrderedSymbols returns input order when not reversed", function()
@@ -191,7 +191,7 @@ test("GetStrategyOrderedSymbols returns input order when not reversed", function
     assertEqual(#ordered, 3)
     assertEqual(ordered[1].char, "X")
     assertEqual(ordered[2].char, "V")
-    assertEqual(ordered[3].char, "<>")
+    assertEqual(ordered[3].char, "D")
 end)
 
 test("GetStrategyOrderedSymbols returns reversed order when reversed", function()
@@ -206,7 +206,7 @@ test("GetStrategyOrderedSymbols returns reversed order when reversed", function(
     local ordered = FUA:GetStrategyOrderedSymbols()
 
     assertEqual(#ordered, 3)
-    assertEqual(ordered[1].char, "<>")
+    assertEqual(ordered[1].char, "D")
     assertEqual(ordered[2].char, "V")
     assertEqual(ordered[3].char, "X")
 end)

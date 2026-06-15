@@ -52,6 +52,10 @@ function UnitIsGroupAssistant()
     return isAssistant
 end
 
+FUA.IsProtectedCombat = function()
+    return false
+end
+
 LE_PARTY_CATEGORY_INSTANCE = 2
 
 loadAddonFile("FUA/Core/Colors.lua", addonName, FUA)
@@ -76,12 +80,17 @@ local function resetState()
     FUA.outputMode = "char"
     FUA.reverseOrder = false
 
+    chatOpened = false
     openedChatText = nil
     inInstanceGroup = false
+    broadcastCalled = false
     inRaid = false
     inGroup = false
     isLeader = false
     isAssistant = false
+    FUA.IsProtectedCombat = function()
+        return false
+    end
 end
 
 -----------------------------------------------------------------------
@@ -145,7 +154,7 @@ test("OpenRaidChat opens prepared message", function()
     FUA.order = {
         { char = "X", marker = "{rt7}" },
         { char = "V", marker = "{rt4}" },
-        { char = "<>", marker = "{rt3}" },
+        { char = "D", marker = "{rt3}" },
     }
 
     FUA:OpenRaidChat()
@@ -156,6 +165,10 @@ end)
 test("OpenRaidChat respects reverse order", function()
     resetState()
 
+    FUA.IsProtectedCombat = function()
+        return true
+    end
+
     FUA.reverseOrder = true
 
     FUA:AddSymbol(FUA.symbols[1])
@@ -164,7 +177,7 @@ test("OpenRaidChat respects reverse order", function()
 
     FUA:OpenRaidChat()
 
-    assertEqual(openedChatText, "/say FUA:  [ <> ]    [ V ]    [ X ]")
+    assertEqual(openedChatText, "/say FUA:  [ D ]    [ V ]    [ X ]")
 end)
 
 test("OpenRaidChat does not open chat for empty order", function()
@@ -173,6 +186,28 @@ test("OpenRaidChat does not open chat for empty order", function()
     FUA:OpenRaidChat()
 
     assertNil(openedChatText)
+end)
+
+test("OpenRaidChat opens chat during protected combat", function()
+    resetState()
+
+    FUA.IsProtectedCombat = function()
+        return true
+    end
+
+    FUA.BroadcastAssignment = function()
+        broadcastCalled = true
+    end
+
+    FUA.GetPreparedMessageOrderString = function()
+        return "[ X ] [ V ] [ T ]"
+    end
+
+    FUA:OpenRaidChat()
+
+    assertEqual(FUA:IsProtectedCombat(), true)
+    assertEqual(FUA:GetPreparedMessageOrderString(), "[ X ] [ V ] [ T ]")
+    assertEqual(broadcastCalled, false)
 end)
 
 -----------------------------------------------------------------------

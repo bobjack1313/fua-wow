@@ -48,6 +48,16 @@ function FUA:HandleAddonMessage(prefix, message, channel, sender)
         return
     end
 
+    local playerName, playerRealm = UnitFullName("player")
+    local fullPlayerName = playerRealm and (playerName .. "-" .. playerRealm) or playerName
+
+    if sender == playerName or sender == fullPlayerName then
+        if self.DEBUG_COMMS then
+            self:PrintInfo("Ignoring own addon message.")
+        end
+        return
+    end
+
     if self.DEBUG_COMMS then
         self:PrintInfo(
             "RX addon message from " ..
@@ -62,6 +72,14 @@ function FUA:HandleAddonMessage(prefix, message, channel, sender)
     local parsed = self:ParseChatAssignment("FUA: " .. tostring(message))
     if not parsed then
         self:PrintError("Addon message parse failed.")
+        return
+    end
+
+    -- Checks for combat restriction - If lifted this feature will work
+    if self:IsProtectedCombat() then
+        if self.DEBUG_COMMS then
+            self:PrintInfo("Ignoring addon import during protected combat.")
+        end
         return
     end
 

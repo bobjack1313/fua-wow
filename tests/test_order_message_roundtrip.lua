@@ -63,20 +63,20 @@ test("Prepared chat output matches diagram order and parser round-trips", functi
 
     FUA:AddSymbol(FUA.symbols[1]) -- X
     FUA:AddSymbol(FUA.symbols[2]) -- V
-    FUA:AddSymbol(FUA.symbols[3]) -- <>
+    FUA:AddSymbol(FUA.symbols[3]) -- D
     FUA:AddSymbol(FUA.symbols[4]) -- T
     FUA:AddSymbol(FUA.symbols[5]) -- O
 
-    assertEqual(currentOrderLabels(), "X,V,<>,T,O")
+    assertEqual(currentOrderLabels(), "X,V,D,T,O")
 
     local displayInputString = FUA:GetDisplayOrderString()
-    assertEqual(displayInputString, "[ X ]    [ V ]    [ <> ]    [ T ]    [ O ]")
+    assertEqual(displayInputString, "[ X ]    [ V ]    [ D ]    [ T ]    [ O ]")
 
     local diagramSymbols = FUA:GetStrategyOrderedSymbols()
-    assertEqual(labelString(diagramSymbols), "O,T,<>,V,X")
+    assertEqual(labelString(diagramSymbols), "O,T,D,V,X")
 
     local preparedMessage = FUA:GetPreparedMessageOrderString()
-    assertEqual(preparedMessage, "[ O ]    [ T ]    [ <> ]    [ V ]    [ X ]")
+    assertEqual(preparedMessage, "[ O ]    [ T ]    [ D ]    [ V ]    [ X ]")
 
     local parsed = FUA:ParseChatAssignment("FUA:  " .. preparedMessage)
 
@@ -94,13 +94,13 @@ test("Diagram slot order matches stored order", function()
 
     FUA:AddSymbol(FUA.symbols[1]) -- X
     FUA:AddSymbol(FUA.symbols[2]) -- V
-    FUA:AddSymbol(FUA.symbols[3]) -- <>
+    FUA:AddSymbol(FUA.symbols[3]) -- D
     FUA:AddSymbol(FUA.symbols[4]) -- T
     FUA:AddSymbol(FUA.symbols[5]) -- O
 
     assertEqual(FUA.order[1].label, "X")
     assertEqual(FUA.order[2].label, "V")
-    assertEqual(FUA.order[3].label, "<>")
+    assertEqual(FUA.order[3].label, "D")
     assertEqual(FUA.order[4].label, "T")
     assertEqual(FUA.order[5].label, "O")
 
@@ -108,7 +108,7 @@ test("Diagram slot order matches stored order", function()
 
     assertEqual(
         prepared,
-        "[ O ]    [ T ]    [ <> ]    [ V ]    [ X ]"
+        "[ O ]    [ T ]    [ D ]    [ V ]    [ X ]"
     )
 end)
 

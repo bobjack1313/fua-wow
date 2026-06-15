@@ -17,13 +17,10 @@ FUA intentionally follows a simple, player-driven design philosophy. The addon h
   * LFR / Normal: 3 symbols
   * Heroic / Mythic: 5 symbols
 * Duplicate prevention.
-* Intelligent chat channel preparation.
 * Clockwise and Counter Clockwise ordering for strategy.
 * Character and Raid Marker output modes.
 * Automatic message preparation.
 * Encounter detection support.
-* Encounter-specific assignment import support.
-* Assignment import priority system.
 * Compact (collapsed) diagram mode.
 * Encounter diagram with visual position assignments.
 * Dynamic difficulty-aware position layouts.
@@ -115,9 +112,7 @@ Displays raid marker icons in the addon window and prepares the equivalent raid 
 
 ### Sending Messages
 
-Due to Blizzard restrictions during the L'ura encounter, addons cannot reliably open chat channels or automatically send raid messages.
-
-FUA prepares the assignment message for you, but does not send it automatically.
+Due to Blizzard restrictions during the L'ura encounter, addons cannot reliably open chat channels or automatically send raid messages. If these restrictions are lifted, then the addon will send messages. Otherwise, FUA prepares the assignment message for you to send manually.
 
 To send a prepared assignment:
 
@@ -139,28 +134,6 @@ There are a few ways to do this, find one that you like. Outside macros are king
 FUA can optionally detect specific encounters and automatically display the window when the encounter begins.
 
 This functionality is intended only as a convenience feature and does not automate any gameplay actions.
-
-### Assignment Import
-
-FUA can import assignments posted in chat by other players using FUA-compatible formatting.
-
-Supported channels:
-
-* Raid Warning
-* Raid Chat
-* Instance Chat
-
-### Import Priority
-
-Assignment imports follow the following priority:
-
-1. Raid Warning
-2. Raid Chat
-3. Instance Chat
-
-Higher-priority assignments automatically replace lower-priority assignments.
-
-Assignments from the same priority level may overwrite previous assignments, allowing raid leaders to quickly correct mistakes.
 
 ### Encounter Protection
 

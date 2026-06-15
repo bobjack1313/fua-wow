@@ -17,10 +17,6 @@
 --   /fua clear
 --   /fua help
 --   /fua version
---
--- Test Commands:
---   /fua importtest
---   /fua rwtest
 -----------------------------------------------------------------------
 
 local addonName, FUA = ...
@@ -52,44 +48,10 @@ function FUA:RegisterCommands()
             print("/fua hide - Hide the window")
             print("/fua clear - Clear the current order")
             print("/fua version - Show version")
-            print("/fua broadcast - Send assignment through addon comms")
-            print("/fua importtest - Local import parser test")
-            print("/fua commtest - Whisper addon-message test to self")
             print("/fua gamut - Test addon-message channels")
-            print("/fi <code> - Import assignment code")
 
         elseif msg == "version" then
             print(self:GetPrefix() .. " " .. self.L.VERSION_LABEL .. " " .. self.VERSION)
-
-        elseif msg == "broadcast" then
-            self:BroadcastAssignment()
-
-        elseif msg == "importtest" then
-            local parsed = self:ParseChatAssignment(
-                "FUA: [ <> ] [ V ] [ X ]"
-            )
-
-            if parsed then
-                self:ImportAssignment(parsed, 100)
-            else
-                self:PrintError("Import test parse failed")
-            end
-
-        elseif msg == "commtest" then
-            local name, realm = UnitFullName("player")
-            local target = realm and (name .. "-" .. realm) or name
-
-            print("FUA COMM TEST: combat=", InCombatLockdown() and "YES" or "NO")
-            print("FUA COMM TEST: sending to", target)
-
-            local result = C_ChatInfo.SendAddonMessage(
-                "FUA",
-                "TEST-COMBAT",
-                "WHISPER",
-                target
-            )
-
-            print("FUA COMM TEST: SendAddonMessage returned", tostring(result))
 
         elseif msg == "gamut" then
             local payload = "GAMUT-" .. tostring(time())
@@ -184,6 +146,8 @@ function FUA:RegisterCommands()
         print("Group:", tostring(IsInGroup()))
         print("Raid:", tostring(IsInRaid()))
         print("Instance Group:", tostring(IsInGroup(LE_PARTY_CATEGORY_INSTANCE)))
+        print("Combat:", InCombatLockdown() and "YES" or "NO")
+        print("Protected Combat:", self:IsProtectedCombat() and "YES" or "NO")
         print("DEBUG_COMMS:", tostring(self.DEBUG_COMMS))
     end
 end

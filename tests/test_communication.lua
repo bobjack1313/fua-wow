@@ -47,7 +47,13 @@ loadAddonFile("FUA/Services/Communication.lua", addonName, FUA)
 FUA.UpdateDisplay = function() end
 FUA.DEBUG_COMMS = false
 FUA.UpdateDifficulty = function() end
-FUA.DEBUG_COMMS = false
+FUA.IsProtectedCombat = function()
+    return false
+end
+
+UnitFullName = function()
+    return "LocalPlayer", "Illidan"
+end
 
 local function resetState()
     FUA.order = {}
@@ -65,10 +71,10 @@ end
 test("ParseChatAssignment parses character output", function()
     resetState()
 
-    local parsed = FUA:ParseChatAssignment("FUA: [ <> ]    [ V ]    [ X ]")
+    local parsed = FUA:ParseChatAssignment("FUA: [ D ]    [ V ]    [ X ]")
 
     assertEqual(#parsed, 3)
-    assertEqual(parsed[1].char, "<>")
+    assertEqual(parsed[1].char, "D")
     assertEqual(parsed[2].char, "V")
     assertEqual(parsed[3].char, "X")
 end)
@@ -87,7 +93,7 @@ end)
 test("ParseChatAssignment rejects missing prefix", function()
     resetState()
 
-    local parsed = FUA:ParseChatAssignment("[ <> ] [ V ] [ X ]")
+    local parsed = FUA:ParseChatAssignment("[ D ] [ V ] [ X ]")
 
     assertNil(parsed)
 end)
@@ -95,7 +101,7 @@ end)
 test("ParseChatAssignment rejects wrong symbol count", function()
     resetState()
 
-    local parsed = FUA:ParseChatAssignment("FUA: [ <> ] [ V ]")
+    local parsed = FUA:ParseChatAssignment("FUA: [ D ] [ V ]")
 
     assertNil(parsed)
 end)
@@ -103,8 +109,8 @@ end)
 test("ImportAssignment allows equal priority override", function()
     resetState()
 
-    local first = FUA:ParseChatAssignment("FUA: [ <> ] [ V ] [ X ]")
-    local second = FUA:ParseChatAssignment("FUA: [ X ] [ V ] [ <> ]")
+    local first = FUA:ParseChatAssignment("FUA: [ D ] [ V ] [ X ]")
+    local second = FUA:ParseChatAssignment("FUA: [ X ] [ V ] [ D ]")
 
     FUA.currentImportPriority = 2
     FUA:ImportAssignment(first, 2)
@@ -116,14 +122,14 @@ end)
 test("ImportAssignment rejects lower priority override", function()
     resetState()
 
-    local first = FUA:ParseChatAssignment("FUA: [ <> ] [ V ] [ X ]")
-    local second = FUA:ParseChatAssignment("FUA: [ X ] [ V ] [ <> ]")
+    local first = FUA:ParseChatAssignment("FUA: [ D ] [ V ] [ X ]")
+    local second = FUA:ParseChatAssignment("FUA: [ X ] [ V ] [ D ]")
 
     FUA.currentImportPriority = 0
     FUA:ImportAssignment(first, 3)
     FUA:ImportAssignment(second, 2)
 
-    assertEqual(FUA.order[1].char, "<>")
+    assertEqual(FUA.order[1].char, "D")
 end)
 
 test("HandleAddonMessage ignores other prefixes", function()
@@ -131,7 +137,7 @@ test("HandleAddonMessage ignores other prefixes", function()
 
     FUA:HandleAddonMessage(
         "OTHER",
-        "[ X ] [ V ] [ <> ]",
+        "[ X ] [ V ] [ D ]",
         "RAID",
         "PlayerA"
     )
@@ -144,7 +150,7 @@ test("HandleAddonMessage imports FUA character payload", function()
 
     FUA:HandleAddonMessage(
         "FUA",
-        "[ X ] [ V ] [ <> ]",
+        "[ X ] [ V ] [ D ]",
         "RAID",
         "PlayerA"
     )
@@ -152,7 +158,7 @@ test("HandleAddonMessage imports FUA character payload", function()
     assertEqual(#FUA.order, 3)
     assertEqual(FUA.order[1].char, "X")
     assertEqual(FUA.order[2].char, "V")
-    assertEqual(FUA.order[3].char, "<>")
+    assertEqual(FUA.order[3].char, "D")
 end)
 
 test("HandleAddonMessage imports FUA marker payload", function()
@@ -178,7 +184,7 @@ test("HandleAddonMessage rejects invalid payload", function()
 
     FUA:HandleAddonMessage(
         "FUA",
-        "[ X ] [ BAD ] [ <> ]",
+        "[ X ] [ BAD ] [ D ]",
         "RAID",
         "PlayerA"
     )
@@ -199,12 +205,12 @@ test("BroadcastAssignment sends addon message", function()
 
     FUA:AddSymbol(FUA.symbols[1]) -- X
     FUA:AddSymbol(FUA.symbols[2]) -- V
-    FUA:AddSymbol(FUA.symbols[3]) -- <>
+    FUA:AddSymbol(FUA.symbols[3]) -- D
 
     FUA:BroadcastAssignment()
 
     assertEqual(sentAddonMessage.prefix, "FUA")
-    assertEqual(sentAddonMessage.message, "[ X ]    [ V ]    [ <> ]")
+    assertEqual(sentAddonMessage.message, "[ X ]    [ V ]    [ D ]")
     assertEqual(sentAddonMessage.channel, "INSTANCE_CHAT")
 end)
 
@@ -232,6 +238,146 @@ test("BroadcastAssignment whispers self when solo", function()
     assertEqual(sentAddonMessage.prefix, "FUA")
     assertEqual(sentAddonMessage.channel, "WHISPER")
     assertEqual(sentAddonMessage.target, "PlayerA")
+end)
+
+test("HandleAddonMessage ignores own addon messages", function()
+    resetState()
+
+    UnitFullName = function()
+        return "PlayerA", "Illidan"
+    end
+
+    FUA:HandleAddonMessage(
+        "FUA",
+        "[ X ] [ V ] [ D ]",
+        "PARTY",
+        "PlayerA-Illidan"
+    )
+
+    assertEqual(#FUA.order, 0)
+end)
+
+test("Broadcast then self receive does not mutate sender order", function()
+    resetState()
+
+    UnitFullName = function()
+        return "PlayerA", "Illidan"
+    end
+
+    IsInGroup = function()
+        return true
+    end
+
+    IsInRaid = function()
+        return false
+    end
+
+    FUA:AddSymbol(FUA.symbols[1]) -- X
+    FUA:AddSymbol(FUA.symbols[2]) -- V
+    FUA:AddSymbol(FUA.symbols[3]) -- D
+
+    local before = FUA:GetDisplayOrderString()
+
+    FUA:BroadcastAssignment()
+
+    FUA:HandleAddonMessage(
+        "FUA",
+        sentAddonMessage.message,
+        "PARTY",
+        "PlayerA-Illidan"
+    )
+
+    local after = FUA:GetDisplayOrderString()
+
+    assertEqual(after, before)
+end)
+
+test("Broadcast does not mutate order before next prepare", function()
+    resetState()
+
+    UnitFullName = function()
+        return "PlayerA", "Illidan"
+    end
+
+    IsInGroup = function()
+        return true
+    end
+
+    IsInRaid = function()
+        return false
+    end
+
+    FUA.reverseOrder = true
+
+    FUA:AddSymbol(FUA.symbols[1]) -- X
+    FUA:AddSymbol(FUA.symbols[2]) -- V
+    FUA:AddSymbol(FUA.symbols[3]) -- D
+
+    local firstPrepared = FUA:GetPreparedMessageOrderString()
+
+    FUA:BroadcastAssignment()
+
+    local secondPrepared = FUA:GetPreparedMessageOrderString()
+
+    assertEqual(firstPrepared, "[ D ]    [ V ]    [ X ]")
+    assertEqual(secondPrepared, firstPrepared)
+end)
+
+test("Broadcast self echo does not flip next prepared message", function()
+    resetState()
+
+    UnitFullName = function()
+        return "PlayerA", "Illidan"
+    end
+
+    IsInGroup = function()
+        return true
+    end
+
+    IsInRaid = function()
+        return false
+    end
+
+    FUA.reverseOrder = true
+
+    FUA:AddSymbol(FUA.symbols[1]) -- X
+    FUA:AddSymbol(FUA.symbols[2]) -- V
+    FUA:AddSymbol(FUA.symbols[3]) -- D
+
+    local firstPrepared = FUA:GetPreparedMessageOrderString()
+
+    FUA:BroadcastAssignment()
+
+    FUA:HandleAddonMessage(
+        "FUA",
+        sentAddonMessage.message,
+        "PARTY",
+        "PlayerA-Illidan"
+    )
+
+    local secondPrepared = FUA:GetPreparedMessageOrderString()
+
+    assertEqual(firstPrepared, "[ D ]    [ V ]    [ X ]")
+    assertEqual(secondPrepared, firstPrepared)
+end)
+
+test("HandleAddonMessage ignores imports during protected combat", function()
+    resetState()
+
+    FUA.IsProtectedCombat = function()
+        return true
+    end
+
+    FUA.isEncounterActive = true
+
+    FUA:HandleAddonMessage(
+        "FUA",
+        "[ X ] [ V ] [ <> ]",
+        "PARTY",
+        "OtherPlayer"
+    )
+
+    assertEqual(#FUA.order, 0)
 end)
 
 -----------------------------------------------------------------------

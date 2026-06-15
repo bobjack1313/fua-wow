@@ -17,6 +17,7 @@ local addonName, FUA = ...
 -- Message Formatting
 -----------------------------------------------------------------------
 
+-- Possible deprecation channels are not really used like this in current state
 function FUA:GetChatPrefix()
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
         return "/instance FUA:  "
@@ -38,16 +39,15 @@ end
 function FUA:OpenRaidChat()
     local text = self:GetPreparedMessageOrderString()
 
-    if type(self.DebugLog) == "function" then
-        self.DebugLog(self, "PREPARE", text)
-    end
-
     if text == "" then
         self:PrintError(self.L.ERR_NO_ORDER)
         return
     end
 
-    self:BroadcastAssignment()
+    if self:IsProtectedCombat() then
+        ChatFrame_OpenChat(self:GetChatPrefix() .. text)
+        return
+    end
 
-    ChatFrame_OpenChat(self:GetChatPrefix() .. text)
+    self:BroadcastAssignment()
 end

@@ -113,4 +113,5 @@ FUA.Locales.enGB = {
     CHARACTERS = "Characters",
 
     PREPARE_MESSAGE = "Prepare Message",
+    SEND_MESSAGE = "Send Message",
 }

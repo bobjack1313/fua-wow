@@ -101,5 +101,6 @@ FUA.Locales.deDE = {
     MARKERS = "Markierungen",
     CHARACTERS = "Zeichen",
 
-    PREPARE_MESSAGE = "Nachricht vorbereiten",
+    PREPARE_MESSAGE = "Nachricht Vorbereiten",
+    SEND_MESSAGE = "Nachricht Senden",
 }

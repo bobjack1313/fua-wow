@@ -158,10 +158,11 @@ function FUA:CreateControls()
     local chatButton = CreateFrame("Button", nil, fullControlsFrame, "GameMenuButtonTemplate")
     chatButton:SetSize(UI.CHAT_BUTTON_WIDTH, UI.CHAT_BUTTON_HEIGHT)
     chatButton:SetPoint("TOPLEFT", undoButton, "BOTTOMLEFT", UI.CHAT_BUTTON_X, UI.CHAT_BUTTON_Y)
-    chatButton:SetText(self.L.PREPARE_MESSAGE)
+    chatButton:SetText(self.L.SEND_MESSAGE)
     chatButton:SetScript("OnClick", function()
         self:OpenRaidChat()
     end)
+    self.chatButton = chatButton
 end
 
 -----------------------------------------------------------------------
@@ -175,6 +176,14 @@ function FUA:UpdateDisplay()
 
     if self.countText then
         self.countText:SetText(#self.order .. "/" .. self.symbolCount)
+    end
+
+    if self.chatButton then
+        self.chatButton:SetText(
+            self:IsProtectedCombat()
+                and self.L.PREPARE_MESSAGE
+                or self.L.SEND_MESSAGE
+        )
     end
 
     self:UpdatePositionLayout()

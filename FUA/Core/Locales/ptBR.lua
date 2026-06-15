@@ -109,4 +109,5 @@ FUA.Locales.ptBR = {
     CHARACTERS = "Caracteres",
 
     PREPARE_MESSAGE = "Preparar Mensagem",
+    SEND_MESSAGE = "Enviar Mensagem",
 }

@@ -109,6 +109,7 @@ FUA.Locales.esES = {
     CHARACTERS = "Caracteres",
 
     PREPARE_MESSAGE = "Preparar Mensaje",
+    SEND_MESSAGE = "Enviar Mensaje",
 }
 
 -- Latin American Spanish currently reuses Spain Spanish.

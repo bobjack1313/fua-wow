@@ -102,4 +102,5 @@ FUA.Locales.frFR = {
     CHARACTERS = "Caractères",
 
     PREPARE_MESSAGE = "Préparer le message",
+    SEND_MESSAGE = "Envoyer un message",
 }
