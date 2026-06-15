@@ -158,7 +158,7 @@ function FUA:CreateControls()
     local chatButton = CreateFrame("Button", nil, fullControlsFrame, "GameMenuButtonTemplate")
     chatButton:SetSize(UI.CHAT_BUTTON_WIDTH, UI.CHAT_BUTTON_HEIGHT)
     chatButton:SetPoint("TOPLEFT", undoButton, "BOTTOMLEFT", UI.CHAT_BUTTON_X, UI.CHAT_BUTTON_Y)
-    chatButton:SetText(self.L.SEND_MESSAGE)
+    chatButton:SetText(self.L.PREPARE_MESSAGE)
     chatButton:SetScript("OnClick", function()
         self:OpenRaidChat()
     end)
@@ -169,6 +169,19 @@ end
 -- Display Management
 -----------------------------------------------------------------------
 
+function FUA:UpdateChatButtonText()
+    if not self.chatButton then
+        return
+    end
+
+    -- Not working as expected
+    self.chatButton:SetText(
+        self:IsSecureEncounterCombat()
+            and self.L.PREPARE_MESSAGE
+            or self.L.PREPARE_MESSAGE
+    )
+end
+
 function FUA:UpdateDisplay()
     if self.displayText then
         self.displayText:SetText(self:GetDisplayOrderString())
@@ -178,14 +191,7 @@ function FUA:UpdateDisplay()
         self.countText:SetText(#self.order .. "/" .. self.symbolCount)
     end
 
-    if self.chatButton then
-        self.chatButton:SetText(
-            self:IsProtectedCombat()
-                and self.L.PREPARE_MESSAGE
-                or self.L.SEND_MESSAGE
-        )
-    end
-
+    self:UpdateChatButtonText()
     self:UpdatePositionLayout()
     self:UpdatePositionSlots()
 end

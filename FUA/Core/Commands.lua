@@ -147,7 +147,7 @@ function FUA:RegisterCommands()
         print("Raid:", tostring(IsInRaid()))
         print("Instance Group:", tostring(IsInGroup(LE_PARTY_CATEGORY_INSTANCE)))
         print("Combat:", InCombatLockdown() and "YES" or "NO")
-        print("Protected Combat:", self:IsProtectedCombat() and "YES" or "NO")
+        print("Special Combat:", self.IsSecureEncounterCombat() and "YES" or "NO")
         print("DEBUG_COMMS:", tostring(self.DEBUG_COMMS))
     end
 end

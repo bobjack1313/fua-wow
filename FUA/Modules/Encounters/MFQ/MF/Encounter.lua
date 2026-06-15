@@ -97,6 +97,7 @@ function FUA:RegisterEncounterEvents()
 
                 self:UpdateDifficulty()
                 self:ClearOrder()
+                self:UpdateChatButtonText()
 
                 if self.frame and not self.frame:IsShown() then
                     self.frame:Show()
@@ -142,4 +143,10 @@ function FUA:ShowInstanceReminder()
     self.reminderShown = true
 
     self:PrintSuccess(self.L.MF_MSG_READY)
+end
+
+function FUA:IsSecureEncounterCombat()
+    return InCombatLockdown
+        and InCombatLockdown()
+        and self.isEncounterActive == true
 end

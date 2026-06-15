@@ -51,6 +51,10 @@ FUA.IsProtectedCombat = function()
     return false
 end
 
+FUA.IsSecureEncounterCombat = function()
+    return false
+end
+
 UnitFullName = function()
     return "LocalPlayer", "Illidan"
 end

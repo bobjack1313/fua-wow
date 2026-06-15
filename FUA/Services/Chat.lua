@@ -44,7 +44,7 @@ function FUA:OpenRaidChat()
         return
     end
 
-    if self:IsProtectedCombat() then
+    if self:IsSecureEncounterCombat() then
         ChatFrame_OpenChat(self:GetChatPrefix() .. text)
         return
     end

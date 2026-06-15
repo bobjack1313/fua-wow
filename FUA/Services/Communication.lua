@@ -76,7 +76,7 @@ function FUA:HandleAddonMessage(prefix, message, channel, sender)
     end
 
     -- Checks for combat restriction - If lifted this feature will work
-    if self:IsProtectedCombat() then
+    if self:IsSecureEncounterCombat() then
         if self.DEBUG_COMMS then
             self:PrintInfo("Ignoring addon import during protected combat.")
         end

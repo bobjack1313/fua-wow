@@ -56,6 +56,10 @@ FUA.IsProtectedCombat = function()
     return false
 end
 
+FUA.IsSecureEncounterCombat = function()
+    return false
+end
+
 LE_PARTY_CATEGORY_INSTANCE = 2
 
 loadAddonFile("FUA/Core/Colors.lua", addonName, FUA)
@@ -91,6 +95,10 @@ local function resetState()
     FUA.IsProtectedCombat = function()
         return false
     end
+
+    FUA.IsSecureEncounterCombat = function()
+    return false
+end
 end
 
 -----------------------------------------------------------------------
@@ -169,6 +177,10 @@ test("OpenRaidChat respects reverse order", function()
         return true
     end
 
+    FUA.IsSecureEncounterCombat = function()
+        return true
+    end
+
     FUA.reverseOrder = true
 
     FUA:AddSymbol(FUA.symbols[1])
@@ -192,6 +204,10 @@ test("OpenRaidChat opens chat during protected combat", function()
     resetState()
 
     FUA.IsProtectedCombat = function()
+        return true
+    end
+
+    FUA.IsSecureEncounterCombat = function()
         return true
     end
 

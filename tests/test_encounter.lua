@@ -48,6 +48,7 @@ loadAddonFile("FUA/Core/Locale.lua", addonName, FUA)
 loadAddonFile("FUA/Modules/Encounters/MFQ/MF/Data.lua", addonName, FUA)
 loadAddonFile("FUA/Modules/Encounters/MFQ/MF/Encounter.lua", addonName, FUA)
 
+FUA.UpdateChatButtonText = function() end
 FUA.UpdateDisplay = function() end
 FUA.ClearOrder = function() end
 FUA.ShowInstanceReminder = function() end
