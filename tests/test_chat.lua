@@ -203,14 +203,6 @@ end)
 test("OpenRaidChat opens chat during protected combat", function()
     resetState()
 
-    FUA.IsProtectedCombat = function()
-        return true
-    end
-
-    FUA.IsSecureEncounterCombat = function()
-        return true
-    end
-
     FUA.BroadcastAssignment = function()
         broadcastCalled = true
     end
@@ -221,9 +213,9 @@ test("OpenRaidChat opens chat during protected combat", function()
 
     FUA:OpenRaidChat()
 
-    assertEqual(FUA:IsProtectedCombat(), true)
     assertEqual(FUA:GetPreparedMessageOrderString(), "[ X ] [ V ] [ T ]")
-    assertEqual(broadcastCalled, false)
+    assertEqual(broadcastCalled, true)
+    assertEqual(openedChatText,"/say FUA:  [ X ] [ V ] [ T ]")
 end)
 
 -----------------------------------------------------------------------

@@ -1,4 +1,14 @@
-# FUA Version 0.4.4 - 2026-06-15
+## FUA Version 0.4.5 - 2026-06-16
+
+- Fixed guard placed on prepare message. It wasnt allowing practice outside of L'ura fight.
+
+&nbsp;
+
+---
+
+&nbsp;
+
+## FUA Version 0.4.4 - 2026-06-15
 
 - Fixed addon communication self-imports causing assignment order corruption.
 - Added safeguards to ignore a player's own addon messages.
@@ -9,9 +19,15 @@
 - Improved communication diagnostics and test coverage.
 - Added safeguards against debug settings being included in release builds.
 
-# FUA Version 0.4.3 - 2026-06-14
+&nbsp;
 
-## Fixed
+---
+
+&nbsp;
+
+## FUA Version 0.4.3 - 2026-06-14
+
+### Fixed
 
 - Replaced combat chat import system with addon message communication.
 - Removed raid, instance, say, and emote chat parsing to avoid combat taint errors.
@@ -20,24 +36,39 @@
 - Updated communication tests and import handling.
 - Fixed several startup and import stability issues.
 
-# FUA Version 0.4.2 - 2026-06-11
-
-## Fixed
-
-- A bug where MSG_RDY was not set for all locales.
-
-
-# FUA Version 0.4.1 - 2026-06-11
-
-## Fixed
-
-- A debug setting was left on forcing the addon to always be in heroic.
+&nbsp;
 
 ---
 
-# FUA Version 0.4.0 - 2026-06-10
+&nbsp;
 
-## Added
+## FUA Version 0.4.2 - 2026-06-11
+
+### Fixed
+
+- A bug where MSG_RDY was not set for all locales.
+
+&nbsp;
+
+---
+
+&nbsp;
+
+## FUA Version 0.4.1 - 2026-06-11
+
+### Fixed
+
+- A debug setting was left on forcing the addon to always be in heroic.
+
+&nbsp;
+
+---
+
+&nbsp;
+
+## FUA Version 0.4.0 - 2026-06-10
+
+### Added
 
 * Localization framework with automatic client language detection.
 * English (US) localization.
@@ -53,7 +84,7 @@
 * Options button icon support.
 * Additional UI configuration constants for future encounter support.
 
-## Changed
+### Changed
 
 * Refactored addon architecture into Core, Services, Modules, UI, and Localization components.
 * Moved encounter-specific data into encounter modules.
@@ -65,7 +96,7 @@
 * Improved maintainability for future encounter development.
 * Improved project organization and file structure.
 
-## Fixed
+### Fixed
 
 * SavedVariables initialization and startup loading issues.
 * UI state restoration on login and reload.
@@ -73,99 +104,39 @@
 * Multiple UI constant and layout reference issues discovered during refactoring.
 * Various hardcoded text and color references throughout the addon.
 
-## Developer Notes
+### Developer Notes
 
 * Established module structure for future raid and encounter support.
 * Added framework components for future settings, localization, and shared services expansion.
 
----
-
-# Version 0.3.0 - 2026-06-9
-
-## New Features
-
-### Chat Assignment Import
-
-FUA can now read assignment strings posted in chat and automatically populate the assignment order and diagram.
-
-Supported channels:
-
-* Raid Warning
-* Raid Chat
-* Instance Chat
-
-Supported formats:
-
-* Character output (`[ X ] [ T ] [ O ]`)
-* Marker output (`[ {rt7} ] [ {rt1} ] [ {rt2} ]`)
-
-### Assignment Priority System
-
-Imported assignments now follow a priority hierarchy:
-
-1. Raid Warning
-2. Raid Chat
-3. Instance Chat
-
-Higher-priority assignments override lower-priority assignments automatically.
-
-Assignments from the same priority level may overwrite previous assignments, allowing raid leaders to quickly correct mistakes.
-
-### Encounter Validation
-
-Chat assignment imports are only accepted while the Midnight Falls encounter is active.
-
-This prevents unrelated chat messages from triggering assignment updates outside the encounter.
-
-### Assignment Import Feedback
-
-FUA now provides confirmation when an assignment is successfully imported from chat.
-
-### Compact Diagram Mode
-
-Added a collapsible interface mode for players who only need to view assignments.
-
-Collapsed mode displays:
-
-* Diagram
-* Expand button
-* Quick Clear button
-
-Expanded mode retains the full assignment creation interface.
-
-### Persistent Collapse State
-
-FUA now remembers whether the interface was expanded or collapsed between sessions.
+&nbsp;
 
 ---
 
-## UI Improvements
+&nbsp;
 
-### Full-Width Layout Divider
+## Version 0.3.0 - 2026-06-9
 
-Updated divider behavior and layout structure to better support expanded and collapsed interface modes.
+### New Features
 
-### Option Button Visual Refresh
+- Chat Assignment Import
+- Assignment Priority System
+- Encounter Validation
+- Assignment Import Feedback
+- Compact Diagram Mode
+- Collapsed mode displays
+- Persistent Collapse State
 
-Improved option button state indicators for better readability and visual consistency.
+### UI Improvements
 
-### Control Layout Refactor
+- Full-Width Layout Divider
+- Option Button Visual Refresh
+- Control Layout Refactor
 
-Reorganized controls into dedicated compact and full-control sections to support future interface enhancements.
+### Developer Improvements
 
-### Added Commands
-
-Added help and version commands.
-
----
-
-## Developer Improvements
-
-### Automated Test Framework
-
-Added a standalone Lua test framework for validating addon logic outside of World of Warcraft.
-
-### Test Coverage Added
+- Added a standalone Lua test framework for validating addon logic outside of World of Warcraft.
+- Added project testing standards, test organization guidelines and execution instructions.
 
 Automated tests now cover:
 
@@ -178,100 +149,72 @@ Automated tests now cover:
 * Slash commands
 * Addon initialization
 
-### Testing Documentation
+### Internal Changes
 
-Added project testing standards, test organization guidelines, and execution instructions.
+- Communication System Foundation
+- Assignment Parsing Engine
+- Import Source Tracking
+- Runtime State Improvements
 
----
-
-## Internal Changes
-
-### Communication System Foundation
-
-Added communication infrastructure to support both chat-based assignment sharing and future addon-message integration.
-
-### Assignment Parsing Engine
-
-Implemented reusable parsing logic for assignment detection, validation, and import processing.
-
-### Import Source Tracking
-
-Added internal assignment source priority tracking to support safe assignment overrides.
-
-### Runtime State Improvements
-
-Expanded runtime state management for encounter tracking, import handling, and UI persistence.
+&nbsp;
 
 ---
 
-# FUA 0.2.0 - 2026-06-8
+&nbsp;
+
+## FUA 0.2.0 - 2026-06-8
 
 Major visual update for the Midnight Falls encounter helper.
 
-New Features
+### New Features
 
-• Added encounter diagram with visual player position assignments.
-• Added custom L'ura artwork and encounter-themed layout.
-• Added difficulty-aware position displays.
+- Added encounter diagram with visual player position assignments.
+- Added custom L'ura artwork and encounter-themed layout.
+- Added difficulty-aware position displays.
+  - LFR / Normal: 3-position layout
+  - Heroic / Mythic: 5-position layout
+- Added visual rune assignment tracking.
+- Added dedicated options panel.
+- Added settings access from the main window.
 
-* LFR / Normal: 3-position layout
-* Heroic / Mythic: 5-position layout
+### Improvements
 
-• Added visual rune assignment tracking.
-• Added dedicated options panel.
-• Added settings access from the main window.
+- Improved overall UI layout and spacing.
+- Improved visual hierarchy and readability.
+- Reduced interface clutter during encounters.
+- Improved rune icon presentation.
+- Improved assignment preview workflow.
 
-Improvements
+### Quality of Life
 
-• Improved overall UI layout and spacing.
-• Improved visual hierarchy and readability.
-• Reduced interface clutter during encounters.
-• Improved rune icon presentation.
-• Improved assignment preview workflow.
+- Input display now reflects the exact order entered by the player.
+- Encounter diagram displays final strategy positioning separately from input order.
+- Added developer difficulty override support for testing.
 
-Quality of Life
-
-• Input display now reflects the exact order entered by the player.
-• Encounter diagram displays final strategy positioning separately from input order.
-• Added developer difficulty override support for testing.
-
-No gameplay automation has been added. FUA continues to function as a player-controlled communication and coordination tool.
+&nbsp;
 
 ---
 
-# FUA 0.1.0
+&nbsp;
+
+## FUA 0.1.0
 
 Initial public release.
 
-## Features
+### Features
 
-* Rune assignment helper for the Midnight Falls encounter.
-* Supports Character and Raid Marker output modes.
-* Supports Clockwise and Counter Clockwise ordering.
-* Automatic difficulty detection.
+- Rune assignment helper for the Midnight Falls encounter.
+- Supports Character and Raid Marker output modes.
+- Supports Clockwise and Counter Clockwise ordering.
+- Automatic difficulty detection.
+- Duplicate symbol prevention.
+- Automatic encounter detection.
+- Movable user interface.
+- Persistent window position.
+- Persistent user preferences.
 
-  * LFR / Normal: 3 symbols
-  * Heroic / Mythic: 5 symbols
-* Duplicate symbol prevention.
-* Automatic encounter detection.
-* Movable user interface.
-* Persistent window position.
-* Persistent user preferences.
-* Lightweight and player-controlled design.
+### Communication
 
-## Communication
-
-* Generates formatted rune assignment messages.
-* Supports manual review before sending.
-* Designed to remain compliant with Blizzard addon restrictions.
-
-## Commands
-
-* `/fua`
-* `/fua show`
-* `/fua hide`
-* `/fua clear`
-
-## Notes
-
-FUA is designed as a communication aid and does not automate gameplay decisions or automatically send chat messages.
+- Generates formatted rune assignment messages.
+- Supports manual review before sending.
+- Designed to remain compliant with Blizzard addon restrictions.
