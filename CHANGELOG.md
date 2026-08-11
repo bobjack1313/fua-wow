@@ -1,3 +1,7 @@
+## FUA Version 0.4.6 - 2026-08-11
+
+- Incremented version for Midnight 12.1.
+
 ## FUA Version 0.4.5 - 2026-06-16
 
 - Fixed guard placed on prepare message. It wasnt allowing practice outside of L'ura fight.
