@@ -117,4 +117,11 @@ FUA.Locales.enUS = {
 
     PREPARE_MESSAGE = "Prepare Message",
     SEND_MESSAGE = "Send Message",
+
+    -------------------------------------------------------------------
+    -- Azta'rec
+    -------------------------------------------------------------------
+
+    AZ_TITLE = "FUA | Azta'rec",
+    AZ_MEMORY_ORDER = "Memory Order",
 }

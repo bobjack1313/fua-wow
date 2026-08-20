@@ -30,7 +30,48 @@ function FUA:RegisterCommands()
     SLASH_FUA1 = "/fua"
 
     SlashCmdList["FUA"] = function(msg)
-        msg = string.lower(msg or "")
+        msg = string.lower(strtrim(msg or ""))
+
+        -------------------------------------------------------------------
+        -- Azta'rec Commands
+        -------------------------------------------------------------------
+
+        if msg == "az" then
+            if FUA.AZ and FUA.AZ.frame then
+                FUA.AZ.frame:SetShown(not FUA.AZ.frame:IsShown())
+            else
+                FUA:PrintError("Azta'rec module is not available.")
+            end
+            return
+
+        elseif msg == "az show" then
+            if FUA.AZ and FUA.AZ.frame then
+                FUA.AZ.frame:Show()
+            else
+                FUA:PrintError("Azta'rec module is not available.")
+            end
+            return
+
+        elseif msg == "az hide" then
+            if FUA.AZ and FUA.AZ.frame then
+                FUA.AZ.frame:Hide()
+            else
+                FUA:PrintError("Azta'rec module is not available.")
+            end
+            return
+
+        elseif msg == "az clear" then
+            if FUA.AZ and FUA.AZ.ClearOrder then
+                FUA.AZ:ClearOrder()
+            else
+                FUA:PrintError("Azta'rec module is not available.")
+            end
+            return
+        end
+
+        -------------------------------------------------------------------
+        -- Midnight Falls Commands
+        -------------------------------------------------------------------
 
         if msg == "show" then
             self.frame:Show()
@@ -43,15 +84,34 @@ function FUA:RegisterCommands()
 
         elseif msg == "help" then
             print(self:ColorText(self.Colors.SUCCESS, self.L.HELP_TITLE))
-            print("/fua - Toggle the window")
-            print("/fua show - Show the window")
-            print("/fua hide - Hide the window")
-            print("/fua clear - Clear the current order")
+            print("/fua - Toggle the Midnight Falls window")
+            print("/fua show - Show the Midnight Falls window")
+            print("/fua hide - Hide the Midnight Falls window")
+            print("/fua clear - Clear the Midnight Falls order")
+            print("/fua az - Toggle the Azta'rec window")
+            print("/fua az show - Show the Azta'rec window")
+            print("/fua az hide - Hide the Azta'rec window")
+            print("/fua az clear - Clear the Azta'rec order")
             print("/fua version - Show version")
             print("/fua gamut - Test addon-message channels")
 
         elseif msg == "version" then
-            print(self:GetPrefix() .. " " .. self.L.VERSION_LABEL .. " " .. self.VERSION)
+            print(
+                self:GetPrefix()
+                    .. " "
+                    .. self.L.VERSION_LABEL
+                    .. " "
+                    .. self.VERSION
+            )
+
+        elseif msg == "auratest" then
+            if FUA.Auras and FUA.Auras.CreateTestAuraContainer then
+                FUA.Auras:CreateTestAuraContainer()
+                FUA.Auras:CreateTestSecureButton()
+                self:PrintSuccess("Aura test container created.")
+            else
+                self:PrintError("Aura test module is not available.")
+            end
 
         elseif msg == "gamut" then
             local payload = "GAMUT-" .. tostring(time())

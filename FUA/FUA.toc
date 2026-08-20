@@ -2,7 +2,7 @@
 ## Title: FUA
 ## Notes: Modular raid and player utility tools.
 ## Author: Mezcal
-## Version: 0.4.6
+## Version: 0.5.0
 ## IconTexture: Interface\AddOns\FUA\Textures\Core\fua_icon
 ## SavedVariables: FUADB
 
@@ -21,6 +21,11 @@ Core/Locales/frFR.lua
 Core/Locales/itIT.lua
 Core/Locale.lua
 
+Modules/Auras/Core.lua
+Modules/Auras/AuraContainer.lua
+Modules/Auras/SecureUnitButton.lua
+Modules/Auras/Test.lua
+
 Modules/Encounters/MFQ/MF/Data.lua
 Modules/Encounters/MFQ/MF/Order.lua
 Modules/Encounters/MFQ/MF/Encounter.lua
@@ -33,6 +38,14 @@ Modules/Encounters/MFQ/MF/UI/MainFrame.lua
 Modules/Encounters/MFQ/MF/UI/Diagram.lua
 Modules/Encounters/MFQ/MF/UI/Controls.lua
 Modules/Encounters/MFQ/MF/UI/Options.lua
+
+Modules/Encounters/TCI/AZ/Data.lua
+Modules/Encounters/TCI/AZ/UI/Layout.lua
+Modules/Encounters/TCI/AZ/Order.lua
+Modules/Encounters/TCI/AZ/UI/Diagram.lua
+Modules/Encounters/TCI/AZ/UI/Controls.lua
+Modules/Encounters/TCI/AZ/UI/MainFrame.lua
+Modules/Encounters/TCI/AZ/Encounter.lua
 
 Core/Commands.lua
 Core/Init.lua

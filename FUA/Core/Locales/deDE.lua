@@ -103,4 +103,11 @@ FUA.Locales.deDE = {
 
     PREPARE_MESSAGE = "Nachricht Vorbereiten",
     SEND_MESSAGE = "Nachricht Senden",
+
+    -------------------------------------------------------------------
+    -- Azta'rec
+    -------------------------------------------------------------------
+
+    AZ_TITLE = "FUA | Azta'rec",
+    AZ_MEMORY_ORDER = "Merkreihenfolge",
 }

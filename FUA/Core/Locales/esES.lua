@@ -110,6 +110,13 @@ FUA.Locales.esES = {
 
     PREPARE_MESSAGE = "Preparar Mensaje",
     SEND_MESSAGE = "Enviar Mensaje",
+
+    -------------------------------------------------------------------
+    -- Azta'rec
+    -------------------------------------------------------------------
+
+    AZ_TITLE = "FUA | Azta'rec",
+    AZ_MEMORY_ORDER = "Secuencia a memorizar",
 }
 
 -- Latin American Spanish currently reuses Spain Spanish.
